@@ -1,21 +1,22 @@
 import React from 'react';
 import s from './Footer.module.scss';
 import BlockMedia from '../common/BlockMedia/BlockMedia';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
 	return (
 		<footer className={s.footer}>
 			<div className={s.footerLinksAndForm}>
 				<div className={s.footerLinks}>
-					<a className={s.footerLink} href=''>
-						CONTACT
-					</a>
+					<Link className={s.footerLink} to='/contacts'>
+						CONTACTS
+					</Link>
 					<a className={s.footerLink} href=''>
 						TERMS OF SERVICES
 					</a>
-					<a className={s.footerLink} href=''>
-						SHIPPING AND RETURNS
-					</a>
+					<Link className={s.footerLink} to='/privacy'>
+						PRIVACY POLICY
+					</Link>
 				</div>
 				<form className={s.footerForm} action=''>
 					<input

@@ -1,15 +1,14 @@
 @import '../../styles/variables.scss';
 .header {
 	display: flex;
-	// align-items: center;
 	height: 107px;
 	border-bottom: 1px solid $light-colors-gray-light;
 	.headerNavigation {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 42px;
-		margin-top: 48px;
+		height: 100%;
+		padding-top: 48px;
 		width: 100%;
 	}
 }

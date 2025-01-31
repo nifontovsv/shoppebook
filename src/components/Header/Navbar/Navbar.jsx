@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import s from './Navbar.module.scss';
 import clsx from 'clsx';
 import HeaderIcon from '../HeaderIcon/HeaderIcon';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
 	const [activeIndex, setActiveIndex] = useState(null);
@@ -15,27 +16,42 @@ export default function Navbar() {
 			<ul className={s.navList}>
 				<li
 					className={clsx(s.navItem, {
-						[s.active]: activeIndex === 0,
+						[s.navItemActive]: activeIndex === 0,
 					})}>
-					<a onClick={() => handleClick(0)} href='#' className={s.navLink}>
+					<Link
+						onClick={() => handleClick(0)}
+						to='/shop'
+						className={clsx(s.navLink, {
+							[s.navLinkActive]: activeIndex === 0,
+						})}>
 						Shop
-					</a>
+					</Link>
 				</li>
 				<li
 					className={clsx(s.navItem, {
-						[s.active]: activeIndex === 1,
+						[s.navItemActive]: activeIndex === 1,
 					})}>
-					<a onClick={() => handleClick(1)} href='#' className={s.navLink}>
+					<Link
+						onClick={() => handleClick(1)}
+						to='/blog'
+						className={clsx(s.navLink, {
+							[s.navLinkActive]: activeIndex === 1,
+						})}>
 						Blog
-					</a>
+					</Link>
 				</li>
 				<li
 					className={clsx(s.navItem, {
-						[s.active]: activeIndex === 2,
+						[s.navItemActive]: activeIndex === 2,
 					})}>
-					<a onClick={() => handleClick(2)} href='#' className={s.navLink}>
-						About
-					</a>
+					<Link
+						onClick={() => handleClick(2)}
+						to='/contacts'
+						className={clsx(s.navLink, {
+							[s.navLinkActive]: activeIndex === 2,
+						})}>
+						Contacts
+					</Link>
 				</li>
 			</ul>
 			<HeaderIcon />

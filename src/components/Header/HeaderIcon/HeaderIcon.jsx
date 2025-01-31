@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './HeaderIcon.module.scss';
+import { Link } from 'react-router-dom';
 
 export default function HeaderIcon() {
 	return (
@@ -23,7 +24,7 @@ export default function HeaderIcon() {
 					/>
 				</svg>
 			</a>
-			<a className={s.HeaderIcon}>
+			<Link to='/cart' className={s.HeaderIcon}>
 				<svg
 					width='21'
 					height='21'
@@ -43,8 +44,8 @@ export default function HeaderIcon() {
 						fill='black'
 					/>
 				</svg>
-			</a>
-			<a className={s.HeaderIcon}>
+			</Link>
+			<Link to='/wishlist' className={s.HeaderIcon}>
 				<svg
 					width='20'
 					height='20'
@@ -65,8 +66,8 @@ export default function HeaderIcon() {
 						</clipPath>
 					</defs>
 				</svg>
-			</a>
-			<a className={s.HeaderIcon}>
+			</Link>
+			<Link to='/account' className={s.HeaderIcon}>
 				<svg
 					width='22'
 					height='22'
@@ -84,7 +85,7 @@ export default function HeaderIcon() {
 						fill='white'
 					/>
 				</svg>
-			</a>
+			</Link>
 		</div>
 	);
 }
