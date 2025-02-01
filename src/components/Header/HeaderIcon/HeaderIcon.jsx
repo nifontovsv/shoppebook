@@ -1,8 +1,14 @@
 import React from 'react';
 import s from './HeaderIcon.module.scss';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { openSidebar } from '../../../store/reducers/cartReducer';
 
 export default function HeaderIcon() {
+	const dispatch = useDispatch();
+	const handleOpenSidebar = () => {
+		dispatch(openSidebar());
+	};
 	return (
 		<div className={s.HeaderBlockIcon}>
 			<a className={s.HeaderIcon}>
@@ -24,7 +30,7 @@ export default function HeaderIcon() {
 					/>
 				</svg>
 			</a>
-			<Link to='/cart' className={s.HeaderIcon}>
+			<a onClick={handleOpenSidebar} className={s.HeaderIcon}>
 				<svg
 					width='21'
 					height='21'
@@ -44,7 +50,7 @@ export default function HeaderIcon() {
 						fill='black'
 					/>
 				</svg>
-			</Link>
+			</a>
 			<Link to='/wishlist' className={s.HeaderIcon}>
 				<svg
 					width='20'

@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './reducers/cartReducer';
+import booksListReducer from './reducers/booksListReducer';
 
 const store = configureStore({
 	reducer: {
-		// Добавьте редюсеры здесь
+		cart: cartReducer,
+		booksList: booksListReducer,
 	},
 });
+
+window.store = store;
 
 export default store;

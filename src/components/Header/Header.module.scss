@@ -1,8 +1,9 @@
 @import '../../styles/variables.scss';
 .header {
 	display: flex;
-	height: 107px;
+	height: 10vh;
 	border-bottom: 1px solid $light-colors-gray-light;
+	margin-bottom: 62px;
 	.headerNavigation {
 		display: flex;
 		align-items: center;
