@@ -24,6 +24,7 @@ function App() {
 					<Route path='/' element={<Home />} />
 					<Route path='shop' element={<ShopBooksGrid />} />
 					<Route path='blog' element={<BookDetails />} />
+					<Route path='cart' element={<Cart />} />
 					<Route path='contacts' element={<Contacts />} />
 					<Route path='wishlist' element={<BookDetails />} />
 					<Route path='account' element={<Account />} />
@@ -31,7 +32,6 @@ function App() {
 					<Route path='privacy' element={<PrivacyPolicy />} />
 					<Route path='*' element={<NotFound />} />
 				</Routes>
-
 				<Footer />
 			</Container>
 		</Router>

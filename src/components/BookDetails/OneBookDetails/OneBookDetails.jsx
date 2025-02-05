@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import s from './OneBookDetails.module.scss';
 import BlockMedia from '../../common/BlockMedia/BlockMedia';
+import Counter from '../../common/Counter/Counter';
 
 const OneBookDetails = () => {
-	const [count, setCount] = useState(1);
-	const handleDecrement = () => setCount((prev) => prev - 1);
-	const handleIncrement = () => setCount((prev) => prev + 1);
 	return (
 		<div className={s.oneBookDetails}>
 			<h2 className={s.bookHeader}>Monte Cristo</h2>
@@ -111,15 +109,7 @@ const OneBookDetails = () => {
 				id quia atque voluptatibus distinctio repellat.
 			</p>
 			<div className={s.blockAddBookToCart}>
-				<div className={s.counterAddBookToCart}>
-					<button className={s.counterMinus} onClick={handleDecrement}>
-						-
-					</button>
-					<span className={s.count}>{count}</span>
-					<button className={s.counterPlus} onClick={handleIncrement}>
-						+
-					</button>
-				</div>
+				<Counter />
 				<button className={s.btnAddBookToCart}>Add to Cart</button>
 			</div>
 			<div className={s.blockWishlistAndMedia}>
