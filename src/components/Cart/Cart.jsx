@@ -7,6 +7,7 @@ import Title from '../common/Title/Title';
 import Input from '../common/Input/Input';
 import ButtonForm from '../common/ButtonForm/ButtonForm';
 import img01 from '../../img/Img 01.png';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
 	const items = useSelector((state) => state.cart.items);
@@ -201,7 +202,9 @@ const Cart = () => {
 							<span className={styles.cartTotalTitle}>TOTAL</span>
 							<span className={styles.cartTotalPrice}>100$</span>
 						</div>
-						<ButtonForm title='PROCEED TO CHECKOUT' />
+						<Link to='/checkout'>
+							<ButtonForm title='PROCEED TO CHECKOUT' />
+						</Link>
 					</div>
 				</div>
 			</div>

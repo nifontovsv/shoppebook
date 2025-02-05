@@ -13,6 +13,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Cart/Sidebar/Sidebar';
 import Home from './components/Home/Home';
 import ShopBooksGrid from './components/ShopBooksGrid/ShopBooksGrid';
+import Checkout from './components/Cart/Checkout/Checkout';
+import Order from './components/Cart/Checkout/Order/Order';
 
 function App() {
 	return (
@@ -25,6 +27,8 @@ function App() {
 					<Route path='shop' element={<ShopBooksGrid />} />
 					<Route path='blog' element={<BookDetails />} />
 					<Route path='cart' element={<Cart />} />
+					<Route path='checkout' element={<Checkout />} />
+					<Route path='order' element={<Order />} />
 					<Route path='contacts' element={<Contacts />} />
 					<Route path='wishlist' element={<BookDetails />} />
 					<Route path='account' element={<Account />} />
