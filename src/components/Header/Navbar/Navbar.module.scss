@@ -1,8 +1,7 @@
 @import '../../../styles/variables.scss';
 .nav {
 	display: flex;
-	margin-right: 48px;
-	height: 100%;
+	max-width: 100%;
 	.navList {
 		display: flex;
 		align-items: center;

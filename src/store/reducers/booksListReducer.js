@@ -4,6 +4,7 @@ const API_KEY = 'AIzaSyBIVxIvSaQTE85dQ5QFppLL8L3AbOroapg';
 const initialState = {
 	popularBooks: [],
 	books: [],
+	bookDetails: null,
 	query: '',
 	loading: false,
 	error: null,
@@ -38,12 +39,18 @@ export const fetchBooks = createAsyncThunk(
 	'books/fetchBooks',
 	async ({ searchQuery, startIndex }) => {
 		const response = await fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}&maxResults=8&key=${API_KEY}`
+			`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}&maxResults=12&key=${API_KEY}`
 		);
 		const data = await response.json();
 		return data.items || [];
 	}
 );
+// 🔹 Асинхронный экшен для деталей книги
+export const fetchDetailsBooks = createAsyncThunk('bookDetails/fetchBooks', async ({ id }) => {
+	const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`);
+	const data = await response.json();
+	return data;
+});
 
 const booksListReducer = createSlice({
 	name: 'books',
@@ -54,6 +61,10 @@ const booksListReducer = createSlice({
 			state.books = [];
 			state.page = 0;
 		},
+		clearBookDetails(state) {
+			state.bookDetails = null;
+		},
+
 		// incrementPage(state) {
 		// 	state.page += 1;
 		// },
@@ -85,9 +96,22 @@ const booksListReducer = createSlice({
 			.addCase(fetchBooks.rejected, (state) => {
 				state.loading = false;
 				state.error = 'Ошибка при загрузке данных.';
+			})
+			// Детали книги
+			.addCase(fetchDetailsBooks.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(fetchDetailsBooks.fulfilled, (state, action) => {
+				state.loading = false;
+				state.bookDetails = action.payload; // Сохраняем объект книги
+			})
+			.addCase(fetchDetailsBooks.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.error.message;
 			});
 	},
 });
 
-export const { setQuery, incrementPage } = booksListReducer.actions;
+export const { setQuery, incrementPage, clearBookDetails } = booksListReducer.actions;
 export default booksListReducer.reducer;

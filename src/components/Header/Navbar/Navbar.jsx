@@ -20,11 +20,11 @@ export default function Navbar() {
 					})}>
 					<Link
 						onClick={() => handleClick(0)}
-						to='/shop'
+						to='/'
 						className={clsx(s.navLink, {
 							[s.navLinkActive]: activeIndex === 0,
 						})}>
-						Shop
+						Home
 					</Link>
 				</li>
 				<li
@@ -33,11 +33,11 @@ export default function Navbar() {
 					})}>
 					<Link
 						onClick={() => handleClick(1)}
-						to='/blog'
+						to='/shop'
 						className={clsx(s.navLink, {
 							[s.navLinkActive]: activeIndex === 1,
 						})}>
-						Blog
+						Shop
 					</Link>
 				</li>
 				<li
@@ -46,9 +46,22 @@ export default function Navbar() {
 					})}>
 					<Link
 						onClick={() => handleClick(2)}
-						to='/contacts'
+						to='/blog'
 						className={clsx(s.navLink, {
 							[s.navLinkActive]: activeIndex === 2,
+						})}>
+						Blog
+					</Link>
+				</li>
+				<li
+					className={clsx(s.navItem, {
+						[s.navItemActive]: activeIndex === 3,
+					})}>
+					<Link
+						onClick={() => handleClick(3)}
+						to='/contacts'
+						className={clsx(s.navLink, {
+							[s.navLinkActive]: activeIndex === 3,
 						})}>
 						Contacts
 					</Link>

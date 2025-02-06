@@ -20,7 +20,7 @@ export default function () {
 	}, [isSidebarOpen]);
 
 	const items = useSelector((state) => state.cart.items);
-	const cart = useSelector((state) => state.cart);
+	// const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
 	const handleClearCart = () => {
@@ -35,23 +35,16 @@ export default function () {
 					<h1 className={styles.cartTitle}>Shopping bag</h1>
 					<h2 className={styles.cartSubTitle}>5 items</h2>
 				</div>
-				<div className={styles.cartItems}>
+				{/* <div className={styles.cartItems}>
 					<CartItem />
 					<CartItem />
 					<CartItem />
 					<CartItem />
 					<CartItem />
-				</div>
-				{/* {Object.entries(items).map(([id, item]) => (
-					<div className={styles.cartItems} key={id}>
-						<h3>{item.name}</h3>
-						<p>Цена: {item ? item.price * item.quantity : 0} ₽</p>
-
-						<Counter item={item} id={id} />
-
-						<button onClick={() => handleRemove(id)}>Удалить</button>
-					</div>
-				))} */}
+				</div> */}
+				{Object.entries(items).map(([id, item]) => (
+					<CartItem item={item} id={id} />
+				))}
 				<div className={styles.sidebarCartFooter}>
 					<div className={styles.sidebarCartFooterInfo}>
 						<span className={styles.sidebarCartFooterTitle}>Subtotal (5 items)</span>

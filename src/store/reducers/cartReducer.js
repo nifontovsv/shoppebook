@@ -11,7 +11,10 @@ const cartSlice = createSlice({
 	},
 	reducers: {
 		addItem(state, action) {
-			const { id, name, price } = action.payload;
+			const { id, volumeInfo, saleInfo } = action.payload;
+			const title = volumeInfo?.title;
+			const price = saleInfo?.listPrice?.amount;
+			const image = volumeInfo?.imageLinks?.thumbnail;
 			// Проверяем, если товар уже есть в корзине
 			if (state.items[id]) {
 				// Увеличиваем количество товара в корзине
@@ -20,7 +23,7 @@ const cartSlice = createSlice({
 				state.totalQuantity += 1;
 			} else {
 				// Если товара нет в корзине, добавляем его с количеством 1
-				state.items[id] = { name, price, quantity: 1 };
+				state.items[id] = { title, price, image, quantity: 1 };
 				state.totalQuantity += 1;
 			}
 			// Обновляем общую стоимость

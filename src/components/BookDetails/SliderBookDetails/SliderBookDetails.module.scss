@@ -1,38 +1,113 @@
+// .sliderContainer {
+// 	display: flex;
+// 	max-width: 600px;
+// 	max-height: 540px;
+// 	gap: 16px;
+// 	overflow: hidden;
+
+// 	.smallImages {
+// 		display: flex;
+// 		width: 20%;
+// 		.smallImage {
+// 			border-radius: 10px;
+// 			width: auto; // Вместо 100%, чтобы использовать естественный размер
+// 			height: auto; // Вместо фиксированной высоты
+// 			max-width: 100%; // Чтобы не выходило за границы контейнера
+// 			max-height: 120px; // Ограничение по высоте
+// 			object-fit: contain;
+// 			cursor: pointer;
+// 		}
+// 	}
+// 	.largeImageContainer {
+// 		display: flex;
+// 		justify-content: center; // Центрируем изображение
+// 		align-items: center;
+// 		width: 80%;
+// 		height: 540px; // Фиксируем высоту контейнера
+// 		overflow: hidden; // Чтобы не было выхода за границы
+
+// 		.largeImage {
+// 			border-radius: 10px;
+// 			width: auto; // Вместо 100%, чтобы использовать естественный размер
+// 			height: 100%; // Вместо фиксированной высоты
+// 			max-width: 100%; // Чтобы не выходило за границы контейнера
+// 			max-height: 540px; // Ограничение по высоте
+// 			object-fit: contain;
+
+// 			opacity: 0;
+// 			transition: opacity 1s ease-in-out;
+// 			&.fadeIn {
+// 				opacity: 1;
+// 			}
+// 		}
+// 	}
+// }
+
 .sliderContainer {
 	display: flex;
 	max-width: 600px;
+	max-height: 540px;
 	gap: 16px;
-	.swiper-slide.swiper-slide-active {
-		width: 600px;
-		margin: 0;
+	overflow: hidden;
+
+	@media (max-width: 768px) {
+		flex-direction: column; // На мобильных устройствах меняем направление на вертикальное
+		max-height: none; // Убираем фиксированную высоту
 	}
+
 	.smallImages {
 		display: flex;
-		gap: 40px;
 		width: 20%;
-		height: 540px;
-		.swiperSmallImages {
-			height: 100%;
 
-			.smallImage {
-				width: 120px;
-				height: 120px;
-				cursor: pointer;
-				border-radius: 8px;
+		@media (max-width: 768px) {
+			width: 100%; // На мобильных устройствах занимаем всю ширину
+		}
+
+		.smallImage {
+			border-radius: 10px;
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 120px;
+			object-fit: contain;
+			cursor: pointer;
+
+			@media (max-width: 768px) {
+				max-height: 80px; // Уменьшаем высоту изображений на мобильных устройствах
 			}
 		}
 	}
+
 	.largeImageContainer {
-		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 80%;
+		height: 540px;
+		overflow: hidden;
+
+		@media (max-width: 768px) {
+			width: 100%; // На мобильных устройствах занимаем всю ширину
+			height: auto; // Убираем фиксированную высоту
+		}
+
 		.largeImage {
-			width: 100%;
-			height: 540px;
-			object-fit: cover;
 			border-radius: 10px;
+			width: auto;
+			height: 100%;
+			max-width: 100%;
+			max-height: 540px;
+			object-fit: contain;
+
 			opacity: 0;
 			transition: opacity 1s ease-in-out;
+
 			&.fadeIn {
 				opacity: 1;
+			}
+
+			@media (max-width: 768px) {
+				max-height: 300px; // Уменьшаем высоту основного изображения на мобильных устройствах
 			}
 		}
 	}

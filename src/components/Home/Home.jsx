@@ -4,7 +4,7 @@ import PopularBooks from './PopularBooks/PopularBooks';
 
 const Home = () => {
 	return (
-		<div>
+		<div style={{ paddingTop: '100px' }}>
 			<UncontrolledExample />
 			<PopularBooks />
 		</div>

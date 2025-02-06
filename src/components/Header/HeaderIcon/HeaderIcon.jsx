@@ -3,6 +3,7 @@ import s from './HeaderIcon.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { openSidebar } from '../../../store/reducers/cartReducer';
+import CartIcon from '../../Cart/CartIcon/CartIcon';
 
 export default function HeaderIcon() {
 	const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function HeaderIcon() {
 					/>
 				</svg>
 			</a>
-			<a onClick={handleOpenSidebar} className={s.HeaderIcon}>
+			<div onClick={handleOpenSidebar} className={s.HeaderIcon}>
 				<svg
 					width='21'
 					height='21'
@@ -50,7 +51,8 @@ export default function HeaderIcon() {
 						fill='black'
 					/>
 				</svg>
-			</a>
+				<CartIcon />
+			</div>
 			<Link to='/wishlist' className={s.HeaderIcon}>
 				<svg
 					width='20'

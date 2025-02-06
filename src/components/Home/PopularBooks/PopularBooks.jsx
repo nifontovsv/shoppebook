@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styles from './PopularBooks.module.scss';
 import CatalogPopularBooks from './CatalogPopularBooks/CatalogPopularBooks';
 import LinkAllProducts from './LinkAllProducts/LinkAllProducts';
+import ShoppingBooks from '../../ShopBooksGrid/ShoppingBooks/ShoppingBooks';
 
 const PopularBooks = () => {
 	const { loading = false, error = null } = useSelector((state) => state.booksList) || {};
