@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Sidebar.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-// import Cart from '../Cart';
 import Blur from '../Blur/Blur';
-import { clearCart, removeItem } from '../../../store/reducers/cartReducer';
+import { openSidebar } from '../../../store/reducers/cartReducer';
 
 import CartItem from '../CartItem/CartItem';
 import { Link } from 'react-router-dom';
 
 export default function () {
-	const isSidebarOpen = useSelector((state) => state.cart.isSidebarOpen);
+	const { totalPrice, isSidebarOpen, totalQuantity } = useSelector((state) => state.cart);
 
 	useEffect(() => {
 		if (isSidebarOpen) {
@@ -20,12 +19,7 @@ export default function () {
 	}, [isSidebarOpen]);
 
 	const items = useSelector((state) => state.cart.items);
-	// const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
-
-	const handleClearCart = () => {
-		dispatch(clearCart());
-	};
 
 	return (
 		<>
@@ -33,31 +27,27 @@ export default function () {
 			<div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
 				<div className={styles.sidebarCartHeader}>
 					<h1 className={styles.cartTitle}>Shopping bag</h1>
-					<h2 className={styles.cartSubTitle}>5 items</h2>
+					<h2 className={styles.cartSubTitle}>{totalQuantity} items</h2>
 				</div>
-				{/* <div className={styles.cartItems}>
-					<CartItem />
-					<CartItem />
-					<CartItem />
-					<CartItem />
-					<CartItem />
-				</div> */}
-				{Object.entries(items).map(([id, item]) => (
-					<CartItem item={item} id={id} />
-				))}
+				<div className={styles.cartItems}>
+					{Object.entries(items).map(([id, item]) => (
+						<CartItem item={item} id={id} />
+					))}
+				</div>
 				<div className={styles.sidebarCartFooter}>
 					<div className={styles.sidebarCartFooterInfo}>
-						<span className={styles.sidebarCartFooterTitle}>Subtotal (5 items)</span>
-						<span className={styles.sidebarCartFooterPrice}>$ 100,00 </span>
+						<span className={styles.sidebarCartFooterTitle}>Subtotal ({totalQuantity} items)</span>
+						<span className={styles.sidebarCartFooterPrice}>{totalPrice} $</span>
 					</div>
 					<Link to='cart'>
-						<button className={styles.sidebarCartFooterBtn} onClick={handleClearCart}>
+						<button
+							onClick={() => dispatch(openSidebar(false))}
+							className={styles.sidebarCartFooterBtn}>
 							VIEW CART
 						</button>
 					</Link>
 				</div>
 			</div>
-			{/* <Cart /> */}
 		</>
 	);
 }

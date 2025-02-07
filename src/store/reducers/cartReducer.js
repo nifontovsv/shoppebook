@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState: {
-		items: {}, // Список товаров, где ключ — id товара, значение — { name, price, quantity }
-		totalQuantity: 0, // Общее количество товаров
+		items: {},
+		totalQuantity: 0,
 		isSidebarOpen: false,
 		totalPrice: 0,
 	},
@@ -13,8 +13,9 @@ const cartSlice = createSlice({
 		addItem(state, action) {
 			const { id, volumeInfo, saleInfo } = action.payload;
 			const title = volumeInfo?.title;
-			const price = saleInfo?.listPrice?.amount;
+			const price = Math.round(saleInfo?.listPrice?.amount ?? 0);
 			const image = volumeInfo?.imageLinks?.thumbnail;
+			const author = volumeInfo?.authors;
 			// Проверяем, если товар уже есть в корзине
 			if (state.items[id]) {
 				// Увеличиваем количество товара в корзине
@@ -23,7 +24,7 @@ const cartSlice = createSlice({
 				state.totalQuantity += 1;
 			} else {
 				// Если товара нет в корзине, добавляем его с количеством 1
-				state.items[id] = { title, price, image, quantity: 1 };
+				state.items[id] = { title, author, price, image, quantity: 1 };
 				state.totalQuantity += 1;
 			}
 			// Обновляем общую стоимость
@@ -31,7 +32,7 @@ const cartSlice = createSlice({
 		},
 		removeItem(state, action) {
 			const id = action.payload;
-			const itemTotalPrice = state.items[id].price * state.items[id].quantity;
+			const itemTotalPrice = (state.items[id].price ?? 0) * state.items[id].quantity;
 			state.totalQuantity -= state.items[id].quantity;
 			state.totalPrice -= itemTotalPrice;
 			if (state.items[id]) {
@@ -42,6 +43,7 @@ const cartSlice = createSlice({
 			const { id, quantity } = action.payload;
 			if (state.items[id]) {
 				state.totalQuantity += quantity - state.items[id].quantity;
+				state.totalPrice += (quantity - state.items[id].quantity) * (state.items[id].price ?? 0);
 				state.items[id].quantity = quantity;
 			}
 		},
@@ -59,7 +61,7 @@ const cartSlice = createSlice({
 				state.sum += state.items[id].price;
 
 				// Вычитаем стоимость за одну единицу товара
-				state.totalPrice -= state.items[id].price;
+				state.totalPrice -= state.items[id].price ?? 0; // Защита от `undefined`
 
 				// Удаляем товар, если количество становится 0
 				if (state.items[id].quantity === 0) {

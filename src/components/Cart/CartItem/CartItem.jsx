@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './CartItem.module.scss';
-import { removeItem } from '../../../store/reducers/cartReducer';
+import { decrementCount, incrementCount, removeItem } from '../../../store/reducers/cartReducer';
 import { useDispatch } from 'react-redux';
 
 const CartItem = ({ item, id }) => {
-	const [count, setCount] = useState(1);
-	const handleDecrement = () => setCount((prev) => prev - 1);
-	const handleIncrement = () => setCount((prev) => prev + 1);
-
 	const dispatch = useDispatch();
+
+	const handleDecrementCount = () => {
+		dispatch(decrementCount({ id }));
+	};
+
+	const handleIncrementCount = () => {
+		dispatch(incrementCount({ id }));
+	};
 
 	const handleRemove = () => {
 		dispatch(removeItem(id));
@@ -16,20 +20,24 @@ const CartItem = ({ item, id }) => {
 
 	return (
 		<div className={styles.cartItem}>
-			<img src={item.image} alt='img_01' />
+			<img width={80} src={item.image} alt='img_01' />
 			<div className={styles.cartItemInfo}>
 				<div className={styles.cartItemMainInfo}>
 					<h3 className={styles.cartItemTitle}>{item.title}</h3>
-					<p className={styles.cartItemSubTitle}>Black / Medium</p>
-					<p className={styles.cartItemPrice}>{item.price}</p>
+					<p className={styles.cartItemSubTitle}>{item.author}</p>
+					<p className={styles.cartItemPrice}>{item ? item.price * item.quantity : 0} $</p>
 				</div>
 				<div className={styles.cartItemTotalQuantity}>
 					<span className={styles.cartItemTotalQuantityTitle}>QTY:</span>
-					<button className={styles.cartItemTotalQuantityBtnMinusPlus} onClick={handleDecrement}>
+					<button
+						className={styles.cartItemTotalQuantityBtnMinusPlus}
+						onClick={handleDecrementCount}>
 						-
 					</button>
-					<span className={styles.cartItemTotalQuantityCount}>{count}</span>
-					<button className={styles.cartItemTotalQuantityBtnMinusPlus} onClick={handleIncrement}>
+					<span className={styles.cartItemTotalQuantityCount}>{item.quantity}</span>
+					<button
+						className={styles.cartItemTotalQuantityBtnMinusPlus}
+						onClick={handleIncrementCount}>
 						+
 					</button>
 				</div>

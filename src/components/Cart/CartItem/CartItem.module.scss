@@ -2,14 +2,21 @@
 .cartItem {
 	position: relative;
 	display: flex;
-	width: 287px;
+	width: 100%;
+	padding: 20px;
 	height: 140px;
+	gap: 10px;
+	&:hover {
+		background-color: rgba($color: #cacaca, $alpha: 0.1);
+		border-radius: 8px;
+	}
 	.cartItemInfo {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		margin-left: 8px;
 		.cartItemMainInfo {
+			padding-right: 30px;
 			.cartItemTitle {
 				margin: 0;
 				font-weight: 400;
@@ -59,8 +66,8 @@
 	}
 	.cartItemBtn {
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: 20px;
+		right: 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;

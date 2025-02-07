@@ -59,7 +59,7 @@ const RenderBooks = ({ books }) => {
 						</p>
 						<p className={styles.priceBook}>
 							{book.saleInfo.listPrice
-								? `${book.saleInfo.listPrice.amount} ${book.saleInfo.listPrice.currencyCode}`
+								? `${Math.round(book.saleInfo.listPrice.amount)} $`
 								: 'Распродано'}
 						</p>
 					</li>
