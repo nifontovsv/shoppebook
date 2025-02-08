@@ -17,6 +17,11 @@ const InfoTabs = () => {
 		e.preventDefault();
 		setActiveTab('tab3');
 	};
+	const [reviewsCount, setReviewsCount] = useState(0); // Состояние для хранения количества отзывов
+	// Функция, которую будем передавать в дочерний компонент для обновления состояния
+	const updateReviewsCount = (count) => {
+		setReviewsCount(count); // Обновляем количество отзывов
+	};
 	return (
 		<div className={s.infoTabs}>
 			<ul className={s.infoList}>
@@ -56,11 +61,11 @@ const InfoTabs = () => {
 							[s.infoListItemLinkActive]: activeTab === 'tab3',
 						})}
 						href='#'>
-						Reviews (0)
+						Reviews ({reviewsCount})
 					</a>
 				</li>
 			</ul>
-			<ContentTabs activeTab={activeTab} />
+			<ContentTabs activeTab={activeTab} updateReviewsCount={updateReviewsCount} />
 		</div>
 	);
 };

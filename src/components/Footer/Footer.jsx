@@ -11,9 +11,6 @@ const Footer = () => {
 					<Link className={s.footerLink} to='/contacts'>
 						CONTACTS
 					</Link>
-					<a className={s.footerLink} href=''>
-						TERMS OF SERVICES
-					</a>
 					<Link className={s.footerLink} to='/privacy'>
 						PRIVACY POLICY
 					</Link>

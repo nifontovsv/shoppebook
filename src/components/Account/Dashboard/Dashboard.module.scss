@@ -1,0 +1,147 @@
+@import '../../../styles/variables.scss';
+.dashboard {
+	padding-top: 150px;
+	min-height: 80vh;
+	.dashboardTabs {
+		.dashboardTabsList {
+			margin-top: 64px;
+			display: flex;
+			list-style: none;
+			gap: 49px;
+			height: 60px;
+			border-bottom: 1px solid $light-colors-gray-light;
+
+			.dashboardTabsListItem {
+				.dashboardTabsListLink {
+					text-decoration: none;
+					font-weight: 400;
+					font-size: 20px;
+					line-height: 130%;
+					color: $light-colors-dark-gray-light;
+				}
+				.dashboardTabsListLinkActive {
+					font-weight: 400;
+					font-size: 20px;
+					line-height: 130%;
+					color: $light-colors-black-light;
+				}
+			}
+			.dashboardTabsListItemActive {
+				border-bottom: 1px solid $light-colors-black-light;
+			}
+		}
+	}
+	.dashboardTabsContent {
+		.orders {
+			.orderAlert {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				border-top: 2px solid $light-colors-accent-light;
+				padding: 20px 0;
+				padding-left: 40px;
+				background: $light-colors-light-gray-light;
+				.orderAlertInfo {
+					gap: 16px;
+					display: flex;
+					p {
+						margin: 0;
+					}
+				}
+				.orderAlertTimer {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: #fff;
+					width: 25px;
+					height: 25px;
+					font-weight: 700;
+					border-radius: 50%;
+					background-color: #b4a186;
+					margin-right: 50px;
+					transition: all 0.3s ease;
+				}
+
+				.orderAlertBlockLink {
+					margin-right: 39px;
+					.orderAlertLink {
+						font-weight: 700;
+						font-size: 16px;
+						color: $light-colors-accent-light;
+					}
+				}
+			}
+			.orderTable {
+				margin: 50px;
+			}
+		}
+		.addresses {
+			.addressesInfo {
+				margin-top: 36px;
+				margin-bottom: 46px;
+			}
+			.addressesWrapper {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				column-gap: 88px;
+				margin-bottom: 250px;
+				.checkoutDetailsFormInfo {
+					display: flex;
+					flex-direction: column;
+					gap: 37px;
+					margin-bottom: 36px;
+					.checkoutDetailsFormName {
+						display: flex;
+						gap: 40px;
+					}
+				}
+				.addressesBlock {
+					.addressesTitle {
+						font-weight: 400;
+						font-size: 20px;
+						line-height: 130%;
+						color: $light-colors-black-light;
+						margin-bottom: 24px;
+					}
+					.addressesBtn {
+						border: none;
+						background-color: transparent;
+						font-weight: 700;
+						font-size: 16px;
+						color: $light-colors-accent-light;
+						margin-bottom: 14px;
+					}
+					.addressesNotYet {
+					}
+				}
+			}
+		}
+		.accountDetails {
+			margin-top: 39px;
+			margin-bottom: 168px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			.accountDetailsForm {
+				display: flex;
+				flex-direction: column;
+				gap: 37px;
+				padding-top: 37px;
+				width: 40%;
+
+				.displayDescription {
+					font-weight: 400;
+					font-size: 12px;
+					color: var(--light-colors-dark-gray---light);
+				}
+				.accountDetailsFormChangePasswordTitle {
+					font-weight: 700;
+					font-size: 16px;
+					color: $light-colors-black-light;
+				}
+			}
+		}
+	}
+}

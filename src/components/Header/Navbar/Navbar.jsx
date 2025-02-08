@@ -42,19 +42,6 @@ export default function Navbar() {
 				</li>
 				<li
 					className={clsx(s.navItem, {
-						[s.navItemActive]: activeIndex === 2,
-					})}>
-					<Link
-						onClick={() => handleClick(2)}
-						to='/blog'
-						className={clsx(s.navLink, {
-							[s.navLinkActive]: activeIndex === 2,
-						})}>
-						Blog
-					</Link>
-				</li>
-				<li
-					className={clsx(s.navItem, {
 						[s.navItemActive]: activeIndex === 3,
 					})}>
 					<Link

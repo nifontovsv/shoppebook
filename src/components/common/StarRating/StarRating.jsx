@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import styles from './StarRating.module.scss';
 
-export default function StarRating() {
-	const [rating, setRating] = useState(0);
+export default function StarRating({ rating, onChange, readOnly = false }) {
 	const [hover, setHover] = useState(0);
 
 	return (
@@ -12,9 +11,9 @@ export default function StarRating() {
 				<Star
 					key={star}
 					className={`${styles.star} ${(hover || rating) >= star ? styles.filled : ''}`}
-					onClick={() => setRating(star)}
-					onMouseEnter={() => setHover(star)}
-					onMouseLeave={() => setHover(0)}
+					onClick={() => !readOnly && onChange(star)}
+					onMouseEnter={() => !readOnly && setHover(star)}
+					onMouseLeave={() => !readOnly && setHover(0)}
 				/>
 			))}
 		</div>

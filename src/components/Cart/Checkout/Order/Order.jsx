@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './Order.module.scss';
+import ButtonForm from '../../../common/ButtonForm/ButtonForm';
+import { Link } from 'react-router-dom';
 
 const Order = () => {
 	const [visible, setVisible] = useState(true);
@@ -133,6 +135,11 @@ const Order = () => {
 						</div>
 					</div>
 				</div>
+			</div>
+			<div style={{ marginBottom: '40px' }}>
+				<Link to='/ordertrack'>
+					<ButtonForm width='20%' title='Order Track' />
+				</Link>
 			</div>
 		</div>
 	);

@@ -16,6 +16,9 @@ import ShopBooksGrid from './components/ShopBooksGrid/ShopBooksGrid';
 import Checkout from './components/Cart/Checkout/Checkout';
 import Order from './components/Cart/Checkout/Order/Order';
 import { useEffect } from 'react';
+import Dashboard from './components/Account/Dashboard/Dashboard';
+import Wishlist from './components/Wishlist/Wishlist';
+import OrderTrack from './components/Cart/Checkout/Order/OrderTrack/OrderTrack';
 
 function App() {
 	const ScrollToTop = () => {
@@ -41,10 +44,12 @@ function App() {
 					<Route path='book/:id' element={<BookDetails />} />
 					<Route path='cart' element={<Cart />} />
 					<Route path='checkout' element={<Checkout />} />
-					<Route path='order' element={<Order />} />
-					<Route path='contacts' element={<Contacts />} />
-					<Route path='wishlist' element={<BookDetails />} />
+					<Route path='wishlist' element={<Wishlist />} />
 					<Route path='account' element={<Account />} />
+					<Route path='order' element={<Order />} />
+					<Route path='ordertrack' element={<OrderTrack />} />
+					<Route path='contacts' element={<Contacts />} />
+					<Route path='dashboard' element={<Dashboard />} />
 					<Route path='password' element={<Password />} />
 					<Route path='privacy' element={<PrivacyPolicy />} />
 					<Route path='*' element={<NotFound />} />
