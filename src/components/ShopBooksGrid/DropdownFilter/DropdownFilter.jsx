@@ -3,70 +3,44 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
+import { setCategory } from '../../../store/reducers/booksListReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SelectLabels() {
-	const [sort, setSort] = React.useState('');
+	const dispatch = useDispatch();
+	const categories = useSelector((state) => state.booksList.categories);
+	const category = useSelector((state) => state.booksList.category);
 
-	const handleChange = event => {
-		setSort(event.target.value);
+	const handleCategoryChange = (event) => {
+		dispatch(setCategory(event.target.value));
 	};
 
 	return (
-		<div style={{ margin: '35px 0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-			<FormControl sx={{ m: 0, minWidth: '100%', border: '1px solid #565656', borderRadius: '4px' }}>
-				<Select
-					value={sort}
-					onChange={handleChange}
-					displayEmpty
-					inputProps={{ 'aria-label': 'Without label' }}
-					input={
-						<InputBase
-							sx={{
-								'&:focus': {
-									outline: 'none', // Убираем контур при фокусе
-									boxShadow: 'none', // Убираем тень при фокусе
-								},
-								// Дополнительные стили для InputBase
-								'& .MuiInputBase-input': {
-									padding: '10px',
-								},
-							}}
-						/>
-					}
-				>
-					<MenuItem value=''>Sort By</MenuItem>
-					<MenuItem value={10}>Ten</MenuItem>
-					<MenuItem value={20}>Twenty</MenuItem>
-					<MenuItem value={30}>Thirty</MenuItem>
-				</Select>
-			</FormControl>
-			<FormControl sx={{ m: 0, minWidth: '100%', border: '1px solid #565656', borderRadius: '4px' }}>
-				<Select
-					value={sort}
-					onChange={handleChange}
-					displayEmpty
-					inputProps={{ 'aria-label': 'Without label' }}
-					input={
-						<InputBase
-							sx={{
-								'&:focus': {
-									outline: 'none', // Убираем контур при фокусе
-									boxShadow: 'none', // Убираем тень при фокусе
-								},
-								// Дополнительные стили для InputBase
-								'& .MuiInputBase-input': {
-									padding: '10px',
-								},
-							}}
-						/>
-					}
-				>
-					<MenuItem value=''>Sort By</MenuItem>
-					<MenuItem value={10}>Ten</MenuItem>
-					<MenuItem value={20}>Twenty</MenuItem>
-					<MenuItem value={30}>Thirty</MenuItem>
-				</Select>
-			</FormControl>
-		</div>
+		<FormControl sx={{ m: 0, minWidth: '100%', border: '1px solid #565656', borderRadius: '4px' }}>
+			<Select
+				value={category}
+				onChange={handleCategoryChange}
+				displayEmpty
+				inputProps={{ 'aria-label': 'Выберите категорию' }}
+				input={
+					<InputBase
+						sx={{
+							'&:focus': { outline: 'none', boxShadow: 'none' },
+							'& .MuiInputBase-input': { padding: '10px' },
+						}}
+					/>
+				}>
+				<MenuItem value=''>Все категории</MenuItem>
+				{categories.length > 0 ? (
+					categories.map((cat) => (
+						<MenuItem key={cat} value={cat}>
+							{cat}
+						</MenuItem>
+					))
+				) : (
+					<MenuItem disabled>Загрузка...</MenuItem>
+				)}
+			</Select>
+		</FormControl>
 	);
 }

@@ -58,7 +58,7 @@ const RenderBooks = ({ books }) => {
 							{book.volumeInfo.authors?.join(', ') || 'Неизвестные авторы'}
 						</p>
 						<p className={styles.priceBook}>
-							{book.saleInfo.listPrice
+							{book.saleInfo?.listPrice?.amount
 								? `${Math.round(book.saleInfo.listPrice.amount)} $`
 								: 'Распродано'}
 						</p>

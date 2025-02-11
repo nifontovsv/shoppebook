@@ -1,48 +1,38 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import debounce from 'lodash.debounce';
-import styles from './SearchBar.module.scss';
-import { fetchBooks, setQuery } from '../../../store/reducers/booksListReducer';
+import s from './SearchBar.module.scss';
+import { fetchBooks, setIsSearching, setQuery } from '../../../store/reducers/booksListReducer';
 
 const SearchBar = () => {
 	const dispatch = useDispatch();
 	const { query } = useSelector((state) => state.booksList);
 
-	const debouncedFetchBooks = useCallback(
-		debounce((searchQuery) => {
-			if (searchQuery.trim().length > 1) {
-				dispatch(fetchBooks({ searchQuery, startIndex: 0 }));
-			}
-		}, 500),
-		[dispatch]
-	);
-
-	// Слушаем изменения query и вызываем debouncedFetchBooks
-	useEffect(() => {
-		if (query.trim().length > 1) {
-			debouncedFetchBooks(query);
-		}
-		return () => {
-			debouncedFetchBooks.cancel();
-		};
-	}, [debouncedFetchBooks, query]);
-
+	// При клике на кнопку, выполняем поиск с текущим запросом
+	const handleInputChange = (e) => {
+		dispatch(setQuery(e.target.value)); // Исправлено: теперь query обновляется в Redux
+	};
 	// При клике на кнопку, выполняем поиск с текущим запросом
 	const handleSearch = () => {
-		if (query.trim().length > 1) {
+		if (query.trim().length > 0) {
 			dispatch(fetchBooks({ searchQuery: query, startIndex: 0 }));
+			dispatch(setIsSearching(true));
 		}
 	};
+	// Загружаем книги с дефолтным значением при первом рендере
+	useEffect(() => {
+		dispatch(fetchBooks({ searchQuery: 'history+popular' }));
+	}, [dispatch]);
 
 	return (
-		<div className={styles.searchBar}>
+		<div className={s.searchBar}>
 			<input
+				className={s.searchInput}
 				type='text'
 				value={query}
-				onChange={(e) => dispatch(setQuery(e.target.value))}
+				onChange={handleInputChange}
 				placeholder='Search book...'
 			/>
-			<button onClick={handleSearch}>
+			<button className={s.searchButton} onClick={handleSearch}>
 				<svg
 					width='21'
 					height='21'

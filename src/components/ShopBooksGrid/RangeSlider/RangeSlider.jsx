@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPriceRange } from '../../../store/reducers/booksListReducer';
 
 function valuetext(value) {
 	return `${value}`;
 }
 
 export default function RangeSlider() {
-	const [value, setValue] = React.useState([10, 37]);
+	const dispatch = useDispatch();
+	const { minPrice, maxPrice } = useSelector((state) => state.booksList);
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		dispatch(setPriceRange({ min: newValue[0], max: newValue[1] }));
 	};
 
 	return (
@@ -18,8 +21,10 @@ export default function RangeSlider() {
 			<Box sx={{ width: '100%' }}>
 				<Slider
 					getAriaLabel={() => 'Temperature range'}
-					value={value}
+					value={[minPrice, maxPrice]}
 					onChange={handleChange}
+					min={0}
+					max={100000}
 					valueLabelDisplay='off'
 					getAriaValueText={valuetext}
 					sx={{
@@ -55,7 +60,7 @@ export default function RangeSlider() {
 			</Box>
 			<div style={{ display: 'flex', justifyContent: 'space-between', color: '#565656' }}>
 				<span>
-					Price: ${value[0]} - ${value[1]}
+					Price: ${minPrice} - ${maxPrice}
 				</span>
 				<span>Filter</span>
 			</div>

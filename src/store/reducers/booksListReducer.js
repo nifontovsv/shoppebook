@@ -8,6 +8,23 @@ const initialState = {
 	query: '',
 	loading: false,
 	error: null,
+	filteredProducts: [],
+	minPrice: 0,
+	maxPrice: 100000,
+	isSearching: false,
+	page: 0,
+	sortOrder: 'asc', // Добавляем сортировку (asc - по возрастанию, desc - по убыванию)
+	category: '',
+	categories: [], // 🔹 Здесь будут все категории
+};
+
+// 🔹 Функция сортировки книг по цене
+const sortBooks = (books, order) => {
+	return [...books].sort((a, b) => {
+		const priceA = a.saleInfo?.listPrice?.amount || 0;
+		const priceB = b.saleInfo?.listPrice?.amount || 0;
+		return order === 'asc' ? priceA - priceB : priceB - priceA;
+	});
 };
 
 // Асинхронное действие для получения популярных книг
@@ -37,14 +54,23 @@ export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', asy
 // 🔹 Асинхронный экшен для поиска книг
 export const fetchBooks = createAsyncThunk(
 	'books/fetchBooks',
-	async ({ searchQuery, startIndex }) => {
+	async ({ searchQuery = 'history+popular', page = 0, category = '' }) => {
+		const startIndex = page * 20;
+		const encodedQuery = encodeURIComponent(searchQuery);
+		const encodedCategory = encodeURIComponent(category);
+
+		// Добавляем категорию в запрос
+		const queryString = category ? `${encodedQuery}+subject:${encodedCategory}` : encodedQuery;
+
 		const response = await fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}&maxResults=12&key=${API_KEY}`
+			`https://www.googleapis.com/books/v1/volumes?q=${queryString}&startIndex=${startIndex}&maxResults=20&key=${API_KEY}`
 		);
 		const data = await response.json();
-		return data.items || [];
+
+		return { books: data.items || [], page };
 	}
 );
+
 // 🔹 Асинхронный экшен для деталей книги
 export const fetchDetailsBooks = createAsyncThunk('bookDetails/fetchBooks', async ({ id }) => {
 	const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`);
@@ -58,16 +84,59 @@ const booksListReducer = createSlice({
 	reducers: {
 		setQuery(state, action) {
 			state.query = action.payload;
-			state.books = [];
 			state.page = 0;
+		},
+		setIsSearching: (state, action) => {
+			state.isSearching = action.payload;
+			state.books = [];
 		},
 		clearBookDetails(state) {
 			state.bookDetails = null;
 		},
+		setPriceRange(state, action) {
+			const { min, max } = action.payload;
+			state.minPrice = min;
+			state.maxPrice = max;
 
-		// incrementPage(state) {
-		// 	state.page += 1;
-		// },
+			// Фильтруем книги и сортируем их
+			state.filteredProducts = sortBooks(
+				state.books.filter((book) => {
+					const price = book.saleInfo?.listPrice?.amount || 0;
+					return price >= min && price <= max;
+				}),
+				state.sortOrder
+			);
+		},
+		setSortOrder(state, action) {
+			state.sortOrder = action.payload;
+			// Сортируем уже отфильтрованные книги
+			state.filteredProducts = sortBooks(state.filteredProducts, state.sortOrder);
+		},
+		setProducts: (state, action) => {
+			state.books = action.payload;
+
+			// Фильтруем и сортируем книги сразу при их загрузке
+			state.filteredProducts = sortBooks(
+				action.payload.filter(
+					(book) =>
+						(book.saleInfo?.listPrice?.amount || 0) >= state.minPrice &&
+						(book.saleInfo?.listPrice?.amount || 0) <= state.maxPrice
+				),
+				state.sortOrder
+			);
+		},
+		// Устанавливаем новую страницу
+		setPage(state, action) {
+			state.page = action.payload;
+		},
+		setCategory(state, action) {
+			state.category = action.payload;
+			state.filteredProducts = state.books.filter((book) => {
+				const bookCategory = book.volumeInfo.categories?.[0] || 'Other'; // Берем первую категорию
+				return state.category === '' || bookCategory === state.category;
+			});
+			state.page = 0; // Сбрасываем страницу на 0 при смене категории
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -91,7 +160,28 @@ const booksListReducer = createSlice({
 			})
 			.addCase(fetchBooks.fulfilled, (state, action) => {
 				state.loading = false;
-				state.books.push(...action.payload);
+				state.books = action.payload.books || [];
+
+				// 🔹 Собираем уникальные категории из загруженных книг
+				const categoriesSet = new Set();
+				state.books.forEach((book) => {
+					if (book.volumeInfo.categories) {
+						book.volumeInfo.categories.forEach((category) => categoriesSet.add(category));
+					}
+				});
+				state.categories = Array.from(categoriesSet); // Преобразуем Set в массив
+
+				// 🔹 Фильтрация по категории и цене
+				state.filteredProducts = state.books.filter((book) => {
+					const price = book.saleInfo?.listPrice?.amount || 0;
+					const bookCategory = book.volumeInfo.categories?.[0] || 'Other';
+
+					return (
+						price >= state.minPrice &&
+						price <= state.maxPrice &&
+						(state.selectedCategory === '' || bookCategory === state.selectedCategory)
+					);
+				});
 			})
 			.addCase(fetchBooks.rejected, (state) => {
 				state.loading = false;
@@ -113,5 +203,15 @@ const booksListReducer = createSlice({
 	},
 });
 
-export const { setQuery, incrementPage, clearBookDetails } = booksListReducer.actions;
+export const {
+	setQuery,
+	incrementPage,
+	clearBookDetails,
+	setPriceRange,
+	setProducts,
+	setIsSearching,
+	setPage,
+	setSortOrder,
+	setCategory,
+} = booksListReducer.actions;
 export default booksListReducer.reducer;
