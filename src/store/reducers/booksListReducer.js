@@ -27,12 +27,30 @@ const sortBooks = (books, order) => {
 	});
 };
 
+const shuffleArray = (array) => {
+	return array.sort(() => Math.random() - 0.5);
+};
+
+// Собираем уникальные основные категории
+export const extractMainCategories = (books) => {
+	const categoriesSet = new Set();
+
+	books.forEach((book) => {
+		const mainCategory = book.volumeInfo.categories?.[0]; // Берем первую категорию
+		if (mainCategory) {
+			categoriesSet.add(mainCategory); // Добавляем только уникальные категории
+		}
+	});
+
+	console.log('Уникальные категории:', Array.from(categoriesSet)); // Вывод в консоль
+	return Array.from(categoriesSet); // Возвращаем массив уникальных категорий
+};
+
 // Асинхронное действие для получения популярных книг
 export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', async () => {
 	// Проверяем, есть ли кешированные данные
 	const cachedBooks = localStorage.getItem('popularBooks');
 	if (cachedBooks) {
-		console.log('Загружаем книги из localStorage');
 		return JSON.parse(cachedBooks);
 	}
 
@@ -54,20 +72,20 @@ export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', asy
 // 🔹 Асинхронный экшен для поиска книг
 export const fetchBooks = createAsyncThunk(
 	'books/fetchBooks',
-	async ({ searchQuery = 'history+popular', page = 0, category = '' }) => {
-		const startIndex = page * 20;
+	async ({ searchQuery, category = '' }) => {
+		const maxStartIndex = 200; // Ограничение API Google Books
+		const randomStartIndex = Math.floor(Math.random() * maxStartIndex); // 🔹 Рандомный startIndex
+
 		const encodedQuery = encodeURIComponent(searchQuery);
 		const encodedCategory = encodeURIComponent(category);
-
-		// Добавляем категорию в запрос
 		const queryString = category ? `${encodedQuery}+subject:${encodedCategory}` : encodedQuery;
 
 		const response = await fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=${queryString}&startIndex=${startIndex}&maxResults=20&key=${API_KEY}`
+			`https://www.googleapis.com/books/v1/volumes?q=${queryString}&startIndex=${randomStartIndex}&maxResults=20&key=${API_KEY}`
 		);
 		const data = await response.json();
 
-		return { books: data.items || [], page };
+		return { books: data.items || [] };
 	}
 );
 
@@ -129,13 +147,25 @@ const booksListReducer = createSlice({
 		setPage(state, action) {
 			state.page = action.payload;
 		},
-		setCategory(state, action) {
+		setCategory: (state, action) => {
 			state.category = action.payload;
-			state.filteredProducts = state.books.filter((book) => {
-				const bookCategory = book.volumeInfo.categories?.[0] || 'Other'; // Берем первую категорию
-				return state.category === '' || bookCategory === state.category;
-			});
-			state.page = 0; // Сбрасываем страницу на 0 при смене категории
+			state.page = 0;
+
+			// Если выбрана "Все категории" — показываем все книги
+			if (state.category === '') {
+				state.filteredProducts = state.books;
+			} else {
+				state.filteredProducts = state.books.filter((book) => {
+					const mainCategory = book.volumeInfo.categories?.[0] || 'Other'; // Берем только первую категорию
+					return mainCategory === state.category;
+				});
+			}
+		},
+		setMainCategories(state, action) {
+			// Устанавливаем категории только если они еще не были заданы
+			if (state.categories.length === 0) {
+				state.categories = action.payload;
+			}
 		},
 	},
 	extraReducers: (builder) => {
@@ -160,18 +190,27 @@ const booksListReducer = createSlice({
 			})
 			.addCase(fetchBooks.fulfilled, (state, action) => {
 				state.loading = false;
-				state.books = action.payload.books || [];
+				state.books = shuffleArray(action.payload.books); // Перемешиваем книги
 
-				// 🔹 Собираем уникальные категории из загруженных книг
-				const categoriesSet = new Set();
-				state.books.forEach((book) => {
-					if (book.volumeInfo.categories) {
-						book.volumeInfo.categories.forEach((category) => categoriesSet.add(category));
-					}
-				});
-				state.categories = Array.from(categoriesSet); // Преобразуем Set в массив
+				// 🔹 Собираем ТОЛЬКО главные категории
+				if (state.categories.length === 0) {
+					const categoriesSet = new Set();
+					state.books.forEach((book) => {
+						const mainCategory = book.volumeInfo.categories?.[0]; // Берем только первую категорию
+						console.log('Главные категории:', mainCategory);
+						if (mainCategory) {
+							categoriesSet.add(mainCategory);
+						}
+					});
+					state.categories = Array.from(categoriesSet); // Уникальный массив главных категорий
+				}
 
-				// 🔹 Фильтрация по категории и цене
+				// 🔹 Устанавливаем категории только при первой загрузке
+				if (state.categories.length === 0) {
+					state.categories = extractMainCategories(state.books);
+				}
+
+				// 🔹 Фильтрация только по ГЛАВНОЙ категории
 				state.filteredProducts = state.books.filter((book) => {
 					const price = book.saleInfo?.listPrice?.amount || 0;
 					const bookCategory = book.volumeInfo.categories?.[0] || 'Other';
@@ -179,7 +218,7 @@ const booksListReducer = createSlice({
 					return (
 						price >= state.minPrice &&
 						price <= state.maxPrice &&
-						(state.selectedCategory === '' || bookCategory === state.selectedCategory)
+						(state.category === '' || bookCategory === state.category)
 					);
 				});
 			})
@@ -213,5 +252,6 @@ export const {
 	setPage,
 	setSortOrder,
 	setCategory,
+	setMainCategories,
 } = booksListReducer.actions;
 export default booksListReducer.reducer;

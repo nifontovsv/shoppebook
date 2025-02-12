@@ -3,16 +3,31 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
-import { setCategory } from '../../../store/reducers/booksListReducer';
+import {
+	extractMainCategories,
+	fetchBooks,
+	setCategory,
+	setMainCategories,
+} from '../../../store/reducers/booksListReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SelectLabels() {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.booksList.categories);
 	const category = useSelector((state) => state.booksList.category);
+	const books = useSelector((state) => state.booksList.books);
+
+	// Устанавливаем главные категории только один раз
+	React.useEffect(() => {
+		if (categories.length === 0 && books.length > 0) {
+			dispatch(setMainCategories(extractMainCategories(books)));
+		}
+	}, [books, categories.length, dispatch]);
 
 	const handleCategoryChange = (event) => {
-		dispatch(setCategory(event.target.value));
+		const newCategory = event.target.value;
+		dispatch(setCategory(newCategory)); // Меняем категорию в стейте
+		dispatch(fetchBooks({ searchQuery: 'books', category: newCategory })); // Загружаем новые книги
 	};
 
 	return (

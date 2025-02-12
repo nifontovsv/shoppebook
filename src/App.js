@@ -19,6 +19,8 @@ import { useEffect } from 'react';
 import Dashboard from './components/Account/Dashboard/Dashboard';
 import Wishlist from './components/Wishlist/Wishlist';
 import OrderTrack from './components/Cart/Checkout/Order/OrderTrack/OrderTrack';
+import { useDispatch } from 'react-redux';
+import { fetchPopularBooks } from './store/reducers/booksListReducer';
 
 function App() {
 	const ScrollToTop = () => {
@@ -30,6 +32,12 @@ function App() {
 
 		return null;
 	};
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchPopularBooks());
+	}, [dispatch]);
 
 	return (
 		<Router>
