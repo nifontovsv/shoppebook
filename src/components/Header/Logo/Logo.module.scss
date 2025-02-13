@@ -8,6 +8,10 @@
 		text-transform: uppercase;
 		margin: 0;
 
+		@media (0px <= width <= 768px) {
+			font-size: 24px;
+		}
+
 		span {
 			font-family: 'Allerta Stencil', sans-serif;
 			display: inline-block;

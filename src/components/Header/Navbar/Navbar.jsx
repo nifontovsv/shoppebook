@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import HeaderIcon from '../HeaderIcon/HeaderIcon';
 import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ burgerMenu }) {
 	const [activeIndex, setActiveIndex] = useState(null);
 
 	const handleClick = (index) => {
@@ -13,7 +13,10 @@ export default function Navbar() {
 
 	return (
 		<nav className={s.nav}>
-			<ul className={s.navList}>
+			<ul
+				className={clsx(s.navList, {
+					[s.navListBurger]: burgerMenu,
+				})}>
 				<li
 					className={clsx(s.navItem, {
 						[s.navItemActive]: activeIndex === 0,

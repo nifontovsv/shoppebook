@@ -7,14 +7,26 @@
 	padding-top: 30px;
 	padding-bottom: 10px;
 
-	width: 100%;
 	border-bottom: 1px solid $light-colors-gray-light;
 	border-radius: 0 0 8px 8px;
-
 	position: fixed;
 	top: 0;
-	width: calc(100% - 200px);
 	background-color: rgba($color: #cdcdcd, $alpha: 0.6);
 	backdrop-filter: blur(5px);
 	z-index: 998;
+	@media (320px <= width <= 768px) {
+		width: calc(100% - 20px);
+	}
+	@media (769px <= width <= 991px) {
+		width: calc(100% - 40px);
+	}
+	@media (992px <= width <= 1200px) {
+		width: calc(100% - 80px);
+	}
+	@media (1201px <= width <= 1400px) {
+		width: calc(100% - 120px);
+	}
+	@media (min-width: 1400px) {
+		width: calc(100% - 200px);
+	}
 }

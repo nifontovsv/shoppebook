@@ -15,7 +15,17 @@ const initialState = {
 	page: 0,
 	sortOrder: 'asc', // Добавляем сортировку (asc - по возрастанию, desc - по убыванию)
 	category: '',
-	categories: [], // 🔹 Здесь будут все категории
+	categories: [
+		'Art',
+		'Biography & Autobiography',
+		'Comics & Graphic Novels',
+		'Computers',
+		'Cooking',
+		'Education',
+		'Fiction',
+		'Health & Fitness',
+		'History',
+	],
 };
 
 // 🔹 Функция сортировки книг по цене
@@ -31,21 +41,6 @@ const shuffleArray = (array) => {
 	return array.sort(() => Math.random() - 0.5);
 };
 
-// Собираем уникальные основные категории
-export const extractMainCategories = (books) => {
-	const categoriesSet = new Set();
-
-	books.forEach((book) => {
-		const mainCategory = book.volumeInfo.categories?.[0]; // Берем первую категорию
-		if (mainCategory) {
-			categoriesSet.add(mainCategory); // Добавляем только уникальные категории
-		}
-	});
-
-	console.log('Уникальные категории:', Array.from(categoriesSet)); // Вывод в консоль
-	return Array.from(categoriesSet); // Возвращаем массив уникальных категорий
-};
-
 // Асинхронное действие для получения популярных книг
 export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', async () => {
 	// Проверяем, есть ли кешированные данные
@@ -56,7 +51,7 @@ export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', asy
 
 	// Если данных нет — делаем запрос
 	const response = await fetch(
-		`https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=12&orderBy=relevance&key=${API_KEY}`
+		`https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=20&orderBy=relevance&key=${API_KEY}`
 	);
 	if (!response.ok) {
 		throw new Error('Ошибка при загрузке данных');
@@ -73,15 +68,15 @@ export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', asy
 export const fetchBooks = createAsyncThunk(
 	'books/fetchBooks',
 	async ({ searchQuery, category = '' }) => {
-		const maxStartIndex = 200; // Ограничение API Google Books
-		const randomStartIndex = Math.floor(Math.random() * maxStartIndex); // 🔹 Рандомный startIndex
+		const maxStartIndex = 50;
+		const randomStartIndex = Math.floor(Math.random() * maxStartIndex);
 
 		const encodedQuery = encodeURIComponent(searchQuery);
 		const encodedCategory = encodeURIComponent(category);
 		const queryString = category ? `${encodedQuery}+subject:${encodedCategory}` : encodedQuery;
 
 		const response = await fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=${queryString}&startIndex=${randomStartIndex}&maxResults=20&key=${API_KEY}`
+			`https://www.googleapis.com/books/v1/volumes?q=${queryString}&startIndex=${randomStartIndex}&maxResults=30&key=${API_KEY}`
 		);
 		const data = await response.json();
 
@@ -190,25 +185,8 @@ const booksListReducer = createSlice({
 			})
 			.addCase(fetchBooks.fulfilled, (state, action) => {
 				state.loading = false;
-				state.books = shuffleArray(action.payload.books); // Перемешиваем книги
-
-				// 🔹 Собираем ТОЛЬКО главные категории
-				if (state.categories.length === 0) {
-					const categoriesSet = new Set();
-					state.books.forEach((book) => {
-						const mainCategory = book.volumeInfo.categories?.[0]; // Берем только первую категорию
-						console.log('Главные категории:', mainCategory);
-						if (mainCategory) {
-							categoriesSet.add(mainCategory);
-						}
-					});
-					state.categories = Array.from(categoriesSet); // Уникальный массив главных категорий
-				}
-
-				// 🔹 Устанавливаем категории только при первой загрузке
-				if (state.categories.length === 0) {
-					state.categories = extractMainCategories(state.books);
-				}
+				// state.books = shuffleArray(action.payload.books); // Перемешиваем книги
+				state.books = action.payload.books;
 
 				// 🔹 Фильтрация только по ГЛАВНОЙ категории
 				state.filteredProducts = state.books.filter((book) => {

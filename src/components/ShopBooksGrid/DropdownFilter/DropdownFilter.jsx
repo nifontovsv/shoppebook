@@ -3,12 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
-import {
-	extractMainCategories,
-	fetchBooks,
-	setCategory,
-	setMainCategories,
-} from '../../../store/reducers/booksListReducer';
+import { fetchBooks, setCategory } from '../../../store/reducers/booksListReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SelectLabels() {
@@ -16,13 +11,6 @@ export default function SelectLabels() {
 	const categories = useSelector((state) => state.booksList.categories);
 	const category = useSelector((state) => state.booksList.category);
 	const books = useSelector((state) => state.booksList.books);
-
-	// Устанавливаем главные категории только один раз
-	React.useEffect(() => {
-		if (categories.length === 0 && books.length > 0) {
-			dispatch(setMainCategories(extractMainCategories(books)));
-		}
-	}, [books, categories.length, dispatch]);
 
 	const handleCategoryChange = (event) => {
 		const newCategory = event.target.value;

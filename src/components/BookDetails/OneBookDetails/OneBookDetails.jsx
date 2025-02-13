@@ -142,7 +142,7 @@ const OneBookDetails = () => {
 			</div>
 			<p className={s.bookDescription}>
 				{shortenTitle(
-					description.replace(/<\/?[a-zA-Z]+>/gi, '') ||
+					description?.replace(/<\/?[a-zA-Z]+>/gi, '') ||
 						'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestiae perferendis sapiente molestias dolores quae? Nostrum voluptates illum harum beatae voluptatum saepe explicabo rem, facilis ab, id culpa aspernatur ex.',
 					300
 				)}
@@ -196,7 +196,7 @@ const OneBookDetails = () => {
 			</div>
 			<div className={s.blockSku}>
 				<p className={s.sku}>Categories:</p>
-				<span className={s.blockSkuValue}>{categories}</span>
+				<span className={s.blockSkuValue}>{categories ? categories : 'no category'}</span>
 			</div>
 		</div>
 	);

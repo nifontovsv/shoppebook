@@ -2,12 +2,27 @@
 	display: flex;
 	justify-content: center;
 	gap: 10px;
+	@media (320px <= width <= 768px) {
+		gap: 3px;
+	}
 }
 
 .carousel-indicators [data-bs-target] {
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
+	@media (320px <= width <= 768px) {
+		width: 8px;
+		height: 8px;
+	}
+	@media (769px <= width <= 991px) {
+	}
+	@media (992px <= width <= 1200px) {
+	}
+	@media (1201px <= width <= 1400px) {
+	}
+	@media (min-width: 1401px) {
+	}
 }
 
 .carousel-indicators .active {
@@ -16,6 +31,10 @@
 	background-color: transparent;
 	border: 1px solid #fff;
 	margin-top: 6px;
+	@media (320px <= width <= 768px) {
+		width: 14px;
+		height: 14px;
+	}
 }
 
 .carousel-inner {

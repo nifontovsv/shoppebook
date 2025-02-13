@@ -64,7 +64,7 @@ const ContentTabs = ({ activeTab, updateReviewsCount }) => {
 		<div className={s.tabsContent}>
 			{activeTab === 'tab1' && (
 				<p className={s.tabDescription}>
-					{description.replace(/<\/?[a-zA-Z]+>/gi, '') ||
+					{description?.replace(/<\/?[a-zA-Z]+>/gi, '') ||
 						'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestiae perferendis sapiente molestias dolores quae? Nostrum voluptates illum harum beatae voluptatum saepe explicabo rem, facilis ab, id culpa aspernatur ex.'}
 				</p>
 			)}

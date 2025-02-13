@@ -1,6 +1,23 @@
 .container {
 	display: flex;
 	flex-direction: column;
-	width: calc(100% - 200px);
 	margin: 0 auto;
+	@media (320px <= width <= 768px) {
+		width: calc(100% - 20px);
+	}
+	@media (769px <= width <= 991px) {
+		width: calc(100% - 40px);
+	}
+	@media (992px <= width <= 1200px) {
+		width: calc(100% - 80px);
+	}
+	@media (1201px <= width <= 1400px) {
+		width: calc(100% - 120px);
+	}
+	@media (min-width: 1400px) {
+		width: calc(100% - 200px);
+	}
+	// @media (min-width: 3000px) {
+	// 	width: calc(100% - 50%);
+	// }
 }

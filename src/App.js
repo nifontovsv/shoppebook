@@ -21,6 +21,7 @@ import Wishlist from './components/Wishlist/Wishlist';
 import OrderTrack from './components/Cart/Checkout/Order/OrderTrack/OrderTrack';
 import { useDispatch } from 'react-redux';
 import { fetchPopularBooks } from './store/reducers/booksListReducer';
+import BurgerMenu from './components/Header/BurgerMenu/BurgerMenu';
 
 function App() {
 	const ScrollToTop = () => {
@@ -44,6 +45,7 @@ function App() {
 			<Container>
 				<Header />
 				<Sidebar />
+				<BurgerMenu />
 				<ScrollToTop />
 				<Routes>
 					<Route path='/' element={<Home />} />

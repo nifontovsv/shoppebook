@@ -7,6 +7,7 @@ const cartSlice = createSlice({
 		items: {},
 		totalQuantity: 0,
 		isSidebarOpen: false,
+		isOpenMenuBurger: false,
 		totalPrice: 0,
 	},
 	reducers: {
@@ -50,8 +51,14 @@ const cartSlice = createSlice({
 		openSidebar(state) {
 			state.isSidebarOpen = !state.isSidebarOpen;
 		},
+		openMenuBurger(state) {
+			state.isOpenMenuBurger = !state.isOpenMenuBurger;
+		},
 		closeSidebar(state) {
 			state.isSidebarOpen = false;
+		},
+		closeMenuBurger(state) {
+			state.isOpenMenuBurger = false;
 		},
 		decrementCount(state, action) {
 			const { id } = action.payload;
@@ -93,7 +100,9 @@ export const {
 	removeItem,
 	updateQuantity,
 	openSidebar,
+	openMenuBurger,
 	closeSidebar,
+	closeMenuBurger,
 	decrementCount,
 	incrementCount,
 	clearCart,
