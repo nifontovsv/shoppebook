@@ -4,7 +4,7 @@
 	display: flex;
 	width: 100%;
 	padding: 20px;
-	height: 140px;
+	height: auto;
 	gap: 10px;
 	&:hover {
 		background-color: rgba($color: #cacaca, $alpha: 0.1);

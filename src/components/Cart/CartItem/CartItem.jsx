@@ -20,7 +20,7 @@ const CartItem = ({ item, id }) => {
 
 	return (
 		<div className={styles.cartItem}>
-			<img width={80} src={item.image} alt='img_01' />
+			<img width={80} height={120} src={item.image} alt='img_01' />
 			<div className={styles.cartItemInfo}>
 				<div className={styles.cartItemMainInfo}>
 					<h3 className={styles.cartItemTitle}>{item.title}</h3>

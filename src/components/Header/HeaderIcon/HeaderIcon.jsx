@@ -4,15 +4,23 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { openSidebar } from '../../../store/reducers/cartReducer';
 import CartIcon from '../../Cart/CartIcon/CartIcon';
+import clsx from 'clsx';
 
-export default function HeaderIcon() {
+export default function HeaderIcon({ burgerMenu }) {
 	const dispatch = useDispatch();
 	const handleOpenSidebar = () => {
 		dispatch(openSidebar());
 	};
 	return (
-		<div className={s.HeaderBlockIcon}>
-			<div onClick={handleOpenSidebar} className={s.HeaderIcon}>
+		<div
+			className={clsx(s.headerBlockIcon, {
+				[s.headerBlockIconBurger]: burgerMenu,
+			})}>
+			<div
+				onClick={handleOpenSidebar}
+				className={clsx(s.headerIcon, {
+					[s.headerIconBurger]: burgerMenu,
+				})}>
 				<svg
 					width='21'
 					height='21'
@@ -34,7 +42,8 @@ export default function HeaderIcon() {
 				</svg>
 				<CartIcon />
 			</div>
-			<Link to='/wishlist' className={s.HeaderIcon}>
+
+			<Link to='/wishlist' className={s.headerIcon}>
 				<svg
 					width='20'
 					height='20'
@@ -56,7 +65,7 @@ export default function HeaderIcon() {
 					</defs>
 				</svg>
 			</Link>
-			<Link to='/account' className={s.HeaderIcon}>
+			<Link to='/account' className={s.headerIcon}>
 				<svg
 					width='22'
 					height='22'

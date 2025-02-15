@@ -1,6 +1,23 @@
 .gridContainer {
 	padding-top: 100px;
 	display: grid;
-	grid-template-columns: 20% auto;
+	grid-template-columns: 200px auto;
 	gap: 30px;
+	@media (max-width: 768px) {
+		grid-template-columns: auto;
+	}
+
+	.filterMobile {
+		display: flex;
+		justify-content: end;
+		padding-right: 40px;
+		.filterMobileLink {
+			text-decoration: none;
+
+			color: #b4a186;
+			&:hover {
+				color: black;
+			}
+		}
+	}
 }

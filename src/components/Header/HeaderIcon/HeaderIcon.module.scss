@@ -1,14 +1,20 @@
 @import '../../../styles/variables.scss';
-.HeaderBlockIcon {
+.headerBlockIcon {
 	height: 21px;
 	display: flex;
 	gap: 28px;
 	border-left: 1px solid $light-colors-dark-gray-light;
 	padding-left: 38px;
 	margin: auto 0;
-	.HeaderIcon {
+	cursor: pointer;
+	.headerIcon {
 		position: relative;
 		display: flex;
 		align-items: center;
 	}
+}
+.headerBlockIconBurger {
+	display: flex;
+	flex-direction: column;
+	border: none;
 }

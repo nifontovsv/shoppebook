@@ -1,6 +1,5 @@
 @import '../../styles/variables.scss';
 .privacy {
-	height: 75vh;
 	padding: 100px 0;
 	gap: 39px;
 	display: flex;
@@ -8,8 +7,8 @@
 	.privacyWrapper {
 		display: flex;
 		flex-direction: column;
-		gap: 39px;
-		width: 60%;
+		gap: 29px;
+		padding: 20px;
 
 		.blockDescription {
 			display: flex;

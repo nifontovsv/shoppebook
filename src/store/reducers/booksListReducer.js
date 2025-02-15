@@ -37,10 +37,6 @@ const sortBooks = (books, order) => {
 	});
 };
 
-const shuffleArray = (array) => {
-	return array.sort(() => Math.random() - 0.5);
-};
-
 // Асинхронное действие для получения популярных книг
 export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', async () => {
 	// Проверяем, есть ли кешированные данные
@@ -51,7 +47,7 @@ export const fetchPopularBooks = createAsyncThunk('books/fetchPopularBooks', asy
 
 	// Если данных нет — делаем запрос
 	const response = await fetch(
-		`https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=20&orderBy=relevance&key=${API_KEY}`
+		`https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=21&orderBy=relevance&key=${API_KEY}`
 	);
 	if (!response.ok) {
 		throw new Error('Ошибка при загрузке данных');

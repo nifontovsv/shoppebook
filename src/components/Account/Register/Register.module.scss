@@ -3,4 +3,7 @@
 	flex-direction: column;
 	width: 100%;
 	gap: 46px;
+	@media (320px <= width <= 768px) {
+		gap: 26px;
+	}
 }

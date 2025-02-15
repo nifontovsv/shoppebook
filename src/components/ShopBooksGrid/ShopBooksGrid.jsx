@@ -1,20 +1,39 @@
-import React from 'react';
-import SearchBar from './SearchBar/SearchBar';
+import React, { useEffect, useState } from 'react';
+
 import styles from './ShopBooksGrid.module.scss';
+
+import { useMediaQuery } from '@mui/material';
+import FilterMobile from './FilterMobile/FilterMobile';
 import ShoppingBooks from './ShoppingBooks/ShoppingBooks';
-import DropdownFilter from './DropdownFilter/DropdownFilter';
-import RangeSlider from './RangeSlider/RangeSlider';
-import SwitchSection from './SwitchSection/SwitchSection';
 
 function ShopBooksGrid() {
+	const [filterMobile, setFilterMobile] = useState(false);
+	const isMobile = useMediaQuery('(max-width:768px)');
+	const noMobile = useMediaQuery('(min-width:769px)');
+
+	useEffect(() => {
+		if (noMobile) {
+			setFilterMobile(false);
+		}
+	}, [noMobile]);
 	return (
 		<div className={styles.gridContainer}>
-			<div>
-				<SearchBar />
-				<DropdownFilter />
-				<RangeSlider />
-				<SwitchSection />
-			</div>
+			{isMobile ? (
+				<div className={styles.filterMobile}>
+					<a
+						className={styles.filterMobileLink}
+						onClick={(e) => {
+							setFilterMobile(!filterMobile);
+							e.preventDefault();
+						}}
+						href=''>
+						Filter
+					</a>
+				</div>
+			) : (
+				<FilterMobile />
+			)}
+			{filterMobile && <FilterMobile />}
 
 			<div>
 				<ShoppingBooks />

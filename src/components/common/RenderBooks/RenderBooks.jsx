@@ -4,6 +4,7 @@ import photo from '../../../img/book1.png';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../../store/reducers/cartReducer';
+import Grid from '@mui/material/Grid2';
 
 const RenderBooks = ({ books }) => {
 	const { loading, error } = useSelector((state) => state.booksList);
@@ -29,45 +30,49 @@ const RenderBooks = ({ books }) => {
 		return title;
 	} // функция чтобы укоротить слишком длинный заголовок книги
 	return (
-		<ul className={styles.listPopularBooks}>
+		<Grid container spacing={3} justifyContent='center' className={styles.listPopularBooks}>
 			{books.length > 0 ? (
 				books.map((book) => (
-					<li className={styles.popularBook} key={book.id}>
-						<div className={styles.backgroundImageBook}>
-							{book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail ? (
-								<img
-									className={styles.imageBook}
-									src={book.volumeInfo.imageLinks.thumbnail}
-									alt={book.volumeInfo.title || 'Без названия'}
-								/>
-							) : (
-								<img className={styles.imageBook} src={photo} alt='Изображение книги' />
-							)}
-							<button onClick={() => addBookToCart(book)} className={styles.addBookToCart}>
-								Add cart
-							</button>
-							<Link to={`/book/${book.id}`} className={styles.seeDetails}>
-								See details
-							</Link>
-						</div>
+					<Grid item xs={12} sm={6} md={4} lg={3} key={book.id}>
+						<div className={styles.popularBook}>
+							<div className={styles.backgroundImageBook}>
+								{book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail ? (
+									<img
+										className={styles.imageBook}
+										src={book.volumeInfo.imageLinks.thumbnail}
+										alt={book.volumeInfo.title || 'Без названия'}
+									/>
+								) : (
+									<img className={styles.imageBook} src={photo} alt='Изображение книги' />
+								)}
+								<button onClick={() => addBookToCart(book)} className={styles.addBookToCart}>
+									Add cart
+								</button>
+								<Link to={`/book/${book.id}`} className={styles.seeDetails}>
+									See details
+								</Link>
+							</div>
 
-						<h2 className={styles.titleBook} title={book.volumeInfo.title}>
-							{shortenTitle(book.volumeInfo.title || 'Без названия', 30)}
-						</h2>
-						<p className={styles.authorBook}>
-							{book.volumeInfo.authors?.join(', ') || 'Неизвестные авторы'}
-						</p>
-						<p className={styles.priceBook}>
-							{book.saleInfo?.listPrice?.amount
-								? `${Math.round(book.saleInfo.listPrice.amount)} $`
-								: 'Распродано'}
-						</p>
-					</li>
+							<h2 className={styles.titleBook} title={book.volumeInfo.title}>
+								{shortenTitle(book.volumeInfo.title || 'Без названия', 20)}
+							</h2>
+							<p className={styles.authorBook}>
+								{book.volumeInfo.authors?.join(', ').slice(0, 30) || 'Неизвестные авторы'}
+							</p>
+							<p className={styles.priceBook}>
+								{book.saleInfo?.listPrice?.amount
+									? `${Math.round(book.saleInfo.listPrice.amount)} $`
+									: 'Распродано'}
+							</p>
+						</div>
+					</Grid>
 				))
 			) : (
-				<p>Нет доступных книг.</p>
+				<Grid item xs={12}>
+					<p>Нет доступных книг.</p>
+				</Grid>
 			)}
-		</ul>
+		</Grid>
 	);
 };
 

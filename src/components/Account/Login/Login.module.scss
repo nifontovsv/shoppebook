@@ -8,6 +8,9 @@
 		display: flex;
 		align-items: center;
 		gap: 10px;
+		@media (320px <= width <= 768px) {
+			margin-bottom: 39px;
+		}
 	}
 	.accountFormForgottenPasswordLink {
 		margin: 0 auto;
