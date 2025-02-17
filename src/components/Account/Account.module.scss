@@ -5,17 +5,16 @@
 	align-items: center;
 	justify-content: center;
 	padding: 128px 0;
-	margin: 0 auto;
+	width: 100%;
 	@media (320px <= width <= 768px) {
-		width: 90%;
 		padding-top: 128px;
 		padding-bottom: 48px;
 	}
 	.accountWrapper {
-		width: 100%;
+		width: 60%;
 		text-align: center;
 		@media (320px <= width <= 768px) {
-			width: 80%;
+			width: 90%;
 		}
 
 		.blockEnter {
@@ -27,16 +26,18 @@
 			display: flex;
 			gap: 5px;
 			align-items: center;
-			justify-content: space-around;
+			justify-content: center;
 			margin-bottom: 126px;
 			@media (320px <= width <= 768px) {
-				margin-bottom: 46px;
-				margin-top: 34px;
+				margin: 20px 0;
 			}
 			.btnEnter {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				border: none;
 				border-radius: 8px;
-				width: 236px;
+				width: 100%;
 				height: 50px;
 				box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
 				background: $light-colors-white-light;

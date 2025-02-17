@@ -27,6 +27,9 @@
 }
 .accountForm > :nth-child(1) {
 	margin-bottom: 46px;
+	@media (320px <= width <= 768px) {
+		margin-bottom: 20px;
+	}
 }
 .accountForm > :nth-child(2) {
 	margin-bottom: 15px;

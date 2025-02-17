@@ -1,6 +1,7 @@
 @import '../../styles/variables.scss';
 .privacy {
-	padding: 100px 0;
+	padding-top: 100px;
+	padding-bottom: 30px;
 	gap: 39px;
 	display: flex;
 	justify-content: center;
@@ -8,7 +9,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 29px;
-		padding: 20px;
+		padding: 20px 100px;
+
+		@media (320px <= width <= 768px) {
+			padding: 20px;
+		}
 
 		.blockDescription {
 			display: flex;

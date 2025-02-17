@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Cart.module.scss';
+import CartItem from './CartItem/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	clearCart,
@@ -41,28 +42,33 @@ const Cart = () => {
 					<div className={styles.cartItemWrapper}>
 						{Object.entries(items).map(([id, item]) => (
 							<div key={id} className={styles.cartItem}>
-								<div className={styles.cartItemInfo}>
-									<img width={100} height={120} src={item.image} alt='img_01' />
-									<div className={styles.cartItemMainInfo}>
+								{/* <div className={styles.cartItemInfo}> */}
+								<img className={styles.cartItemImg} src={item.image} alt='img_01' />
+								<div className={styles.cartItemMainInfo}>
+									<div>
 										<h3 className={styles.cartItemTitle}>{item.title}</h3>
 										<p className={styles.cartItemSubTitle}>{item.author}</p>
 									</div>
-								</div>
-								<div className={styles.cartItemInfoPrice}>
-									{/* <Counter /> */}
-									<div className={styles.counterAddBookToCart}>
-										<button
-											className={styles.counterMinus}
-											onClick={() => handleDecrementCount(id)}>
-											-
-										</button>
-										<span className={styles.count}>{item.quantity}</span>
-										<button className={styles.counterPlus} onClick={() => handleIncrementCount(id)}>
-											+
-										</button>
+									<div className={styles.cartItemInfoPrice}>
+										<div className={styles.counterAddBookToCart}>
+											<button
+												className={styles.counterMinus}
+												onClick={() => handleDecrementCount(id)}>
+												-
+											</button>
+											<span className={styles.count}>{item.quantity}</span>
+											<button
+												className={styles.counterPlus}
+												onClick={() => handleIncrementCount(id)}>
+												+
+											</button>
+										</div>
+										<p className={styles.cartItemPrice}>
+											{item ? item.price * item.quantity : 0} $
+										</p>
 									</div>
-									<p className={styles.cartItemPrice}>{item ? item.price * item.quantity : 0} $</p>
 								</div>
+								{/* </div> */}
 
 								<button className={styles.cartItemBtn} onClick={() => handleRemove(id)}>
 									<svg

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './InfoTabs.module.scss';
 import ContentTabs from './ContentTabs/ContentTabs';
 import clsx from 'clsx';
+import { useParams } from 'react-router-dom';
 
-const InfoTabs = () => {
+const InfoTabs = ({ updateTwoReviewsCount }) => {
+	const { id } = useParams(); // получаем id книги из URL
 	const [activeTab, setActiveTab] = useState('tab1');
 	const handleClickTab1 = (e) => {
 		e.preventDefault();
@@ -18,10 +20,12 @@ const InfoTabs = () => {
 		setActiveTab('tab3');
 	};
 	const [reviewsCount, setReviewsCount] = useState(0); // Состояние для хранения количества отзывов
+	updateTwoReviewsCount(reviewsCount);
 	// Функция, которую будем передавать в дочерний компонент для обновления состояния
 	const updateReviewsCount = (count) => {
 		setReviewsCount(count); // Обновляем количество отзывов
 	};
+
 	return (
 		<div className={s.infoTabs}>
 			<ul className={s.infoList}>

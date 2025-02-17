@@ -7,6 +7,12 @@ import BasicTable from '../../common/BasicTable/BasicTable';
 import Input from '../../common/Input/Input';
 import ButtonForm from '../../common/ButtonForm/ButtonForm';
 import SelectLabels from '../../common/Select/SelectLabels';
+import { IconButton, useMediaQuery } from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import DownloadIcon from '@mui/icons-material/Download';
+import PlaceIcon from '@mui/icons-material/Place';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 const Dashboard = () => {
 	const [activeTab, setActiveTab] = useState('tab1');
@@ -38,116 +44,114 @@ const Dashboard = () => {
 	const [visible, setVisible] = useState(false);
 	const [view, setView] = useState(false);
 	const [view2, setView2] = useState(false);
-	// const [timeLeft, setTimeLeft] = useState(5);
-	// const [fadeOut, setFadeOut] = useState(false);
 
-	// useEffect(() => {
-	// 	if (visible) {
-	// 		let countdown = 5;
-
-	// 		const timerInterval = setInterval(() => {
-	// 			countdown -= 1;
-	// 			setTimeLeft(countdown);
-	// 			if (countdown === 0) clearInterval(timerInterval);
-	// 		}, 1000);
-
-	// 		const timeout = setTimeout(() => {
-	// 			setFadeOut(true); // Запускаем анимацию исчезновения
-	// 			setTimeout(() => setVisible(false), 1000); // Через 1 сек убираем из DOM
-	// 		}, 5000);
-
-	// 		return () => {
-	// 			clearInterval(timerInterval);
-	// 			clearTimeout(timeout);
-	// 		};
-	// 	}
-	// }, [visible]);
+	const isMobile = useMediaQuery('(max-width:768px)');
 
 	return (
 		<div className={styles.dashboard}>
-			<div className={styles.dashboardTabs}>
-				<Title title='My account' />
-				<ul className={styles.dashboardTabsList}>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab1',
-						})}>
-						<a
-							onClick={handleClickTab1}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab1',
-							})}
-							href='#'>
-							Dashboard
-						</a>
-					</li>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab2',
-						})}>
-						<a
-							onClick={handleClickTab2}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab2',
-							})}
-							href='#'>
-							Orders
-						</a>
-					</li>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab3',
-						})}>
-						<a
-							onClick={handleClickTab3}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab3',
-							})}
-							href='#'>
-							Downloads
-						</a>
-					</li>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab4',
-						})}>
-						<a
-							onClick={handleClickTab4}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab4',
-							})}
-							href='#'>
-							Addresses
-						</a>
-					</li>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab5',
-						})}>
-						<a
-							onClick={handleClickTab5}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab5',
-							})}
-							href='#'>
-							Account details
-						</a>
-					</li>
-					<li
-						className={clsx(styles.dashboardTabsListItem, {
-							[styles.dashboardTabsListItemActive]: activeTab === 'tab6',
-						})}>
-						<a
-							onClick={handleClickTab6}
-							className={clsx(styles.dashboardTabsListLink, {
-								[styles.dashboardTabsListLinkActive]: activeTab === 'tab6',
-							})}
-							href='#'>
-							Logout
-						</a>
-					</li>
-				</ul>
-			</div>
+			{isMobile ? (
+				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+					<IconButton onClick={handleClickTab1}>
+						<DashboardIcon />
+					</IconButton>
+					<IconButton onClick={handleClickTab2}>
+						<ShoppingBagIcon />
+					</IconButton>
+					<IconButton onClick={handleClickTab3}>
+						<DownloadIcon />
+					</IconButton>
+					<IconButton onClick={handleClickTab4}>
+						<PlaceIcon />
+					</IconButton>
+					<IconButton onClick={handleClickTab5}>
+						<ManageAccountsIcon />
+					</IconButton>
+				</div>
+			) : (
+				<div className={styles.dashboardTabs}>
+					<Title title='My account' />
+					<ul className={styles.dashboardTabsList}>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab1',
+							})}>
+							<a
+								onClick={handleClickTab1}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab1',
+								})}
+								href='#'>
+								Dashboard
+							</a>
+						</li>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab2',
+							})}>
+							<a
+								onClick={handleClickTab2}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab2',
+								})}
+								href='#'>
+								Orders
+							</a>
+						</li>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab3',
+							})}>
+							<a
+								onClick={handleClickTab3}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab3',
+								})}
+								href='#'>
+								Downloads
+							</a>
+						</li>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab4',
+							})}>
+							<a
+								onClick={handleClickTab4}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab4',
+								})}
+								href='#'>
+								Addresses
+							</a>
+						</li>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab5',
+							})}>
+							<a
+								onClick={handleClickTab5}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab5',
+								})}
+								href='#'>
+								Account details
+							</a>
+						</li>
+						<li
+							className={clsx(styles.dashboardTabsListItem, {
+								[styles.dashboardTabsListItemActive]: activeTab === 'tab6',
+							})}>
+							<a
+								onClick={handleClickTab6}
+								className={clsx(styles.dashboardTabsListLink, {
+									[styles.dashboardTabsListLinkActive]: activeTab === 'tab6',
+								})}
+								href='#'>
+								Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			)}
 			<div className={styles.dashboardTabsContent}>
 				{activeTab === 'tab1' && (
 					<div>
@@ -171,11 +175,77 @@ const Dashboard = () => {
 										BROWSE PRODUCT
 									</Link>
 								</div>
-								{/* <div className={classes.orderAlertTimer}>{timeLeft}</div> */}
 							</div>
 						) : (
 							<div className={styles.orderTable}>
-								<BasicTable />
+								{isMobile ? (
+									<div className={styles.orderMobileContainer}>
+										<div className={styles.orderMobile}>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+												<li className={styles.orderMobileTitle}>DATE</li>
+												<li className={styles.orderMobileTitle}> STATUS</li>
+												<li className={styles.orderMobileTitle}>TOTAL</li>
+												<li className={styles.orderMobileTitle}> ACTIONS</li>
+											</ul>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileSubTitle}>7643980998990</li>
+												<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+												<li className={styles.orderMobileSubTitle}>Delivered</li>
+												<li className={styles.orderMobileSubTitle}>$ 105</li>
+												<li className={styles.orderMobileSubTitle}>
+													<Link className={styles.viewOrder} to='/order'>
+														View Order
+													</Link>
+												</li>
+											</ul>
+										</div>
+										<div className={styles.orderMobile}>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+												<li className={styles.orderMobileTitle}>DATE</li>
+												<li className={styles.orderMobileTitle}> STATUS</li>
+												<li className={styles.orderMobileTitle}>TOTAL</li>
+												<li className={styles.orderMobileTitle}> ACTIONS</li>
+											</ul>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileSubTitle}>7643980998990</li>
+												<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+												<li className={styles.orderMobileSubTitle}>Delivered</li>
+												<li className={styles.orderMobileSubTitle}>$ 105</li>
+												<li className={styles.orderMobileSubTitle}>
+													{' '}
+													<Link className={styles.viewOrder} to='/order'>
+														View Order
+													</Link>
+												</li>
+											</ul>
+										</div>
+										<div className={styles.orderMobile}>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+												<li className={styles.orderMobileTitle}>DATE</li>
+												<li className={styles.orderMobileTitle}> STATUS</li>
+												<li className={styles.orderMobileTitle}>TOTAL</li>
+												<li className={styles.orderMobileTitle}> ACTIONS</li>
+											</ul>
+											<ul className={styles.orderMobileList}>
+												<li className={styles.orderMobileSubTitle}>7643980998990</li>
+												<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+												<li className={styles.orderMobileSubTitle}>Delivered</li>
+												<li className={styles.orderMobileSubTitle}>$ 105</li>
+												<li className={styles.orderMobileSubTitle}>
+													{' '}
+													<Link className={styles.viewOrder} to='/order'>
+														View Order
+													</Link>
+												</li>
+											</ul>
+										</div>
+									</div>
+								) : (
+									<BasicTable />
+								)}
 							</div>
 						)}
 					</div>
@@ -198,7 +268,83 @@ const Dashboard = () => {
 								</div>
 							) : (
 								<div className={styles.orderTable}>
-									<BasicTable download={'| Download'} />
+									{isMobile ? (
+										<div className={styles.orderMobileContainer}>
+											<div className={styles.orderMobile}>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+													<li className={styles.orderMobileTitle}>DATE</li>
+													<li className={styles.orderMobileTitle}> STATUS</li>
+													<li className={styles.orderMobileTitle}>TOTAL</li>
+													<li className={styles.orderMobileTitle}> ACTIONS</li>
+												</ul>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileSubTitle}>7643980998990</li>
+													<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+													<li className={styles.orderMobileSubTitle}>Delivered</li>
+													<li className={styles.orderMobileSubTitle}>$ 105</li>
+													<li className={styles.orderMobileSubTitle}>
+														<Link className={styles.viewOrder} to='/order'>
+															View Order&nbsp;
+														</Link>
+														<Link className={styles.viewOrder} to='/order'>
+															| Download
+														</Link>
+													</li>
+												</ul>
+											</div>
+											<div className={styles.orderMobile}>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+													<li className={styles.orderMobileTitle}>DATE</li>
+													<li className={styles.orderMobileTitle}> STATUS</li>
+													<li className={styles.orderMobileTitle}>TOTAL</li>
+													<li className={styles.orderMobileTitle}> ACTIONS</li>
+												</ul>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileSubTitle}>7643980998990</li>
+													<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+													<li className={styles.orderMobileSubTitle}>Delivered</li>
+													<li className={styles.orderMobileSubTitle}>$ 105</li>
+													<li className={styles.orderMobileSubTitle}>
+														{' '}
+														<Link className={styles.viewOrder} to='/order'>
+															View Order&nbsp;
+														</Link>
+														<Link className={styles.viewOrder} to='/order'>
+															| Download
+														</Link>
+													</li>
+												</ul>
+											</div>
+											<div className={styles.orderMobile}>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileTitle}>ORDER NUMBER</li>
+													<li className={styles.orderMobileTitle}>DATE</li>
+													<li className={styles.orderMobileTitle}> STATUS</li>
+													<li className={styles.orderMobileTitle}>TOTAL</li>
+													<li className={styles.orderMobileTitle}> ACTIONS</li>
+												</ul>
+												<ul className={styles.orderMobileList}>
+													<li className={styles.orderMobileSubTitle}>7643980998990</li>
+													<li className={styles.orderMobileSubTitle}>October 8,2021</li>
+													<li className={styles.orderMobileSubTitle}>Delivered</li>
+													<li className={styles.orderMobileSubTitle}>$ 105</li>
+													<li className={styles.orderMobileSubTitle}>
+														{' '}
+														<Link className={styles.viewOrder} to='/order'>
+															View Order&nbsp;
+														</Link>
+														<Link className={styles.viewOrder} to='/order'>
+															| Download
+														</Link>
+													</li>
+												</ul>
+											</div>
+										</div>
+									) : (
+										<BasicTable download={'| Download'} />
+									)}
 								</div>
 							)}
 						</div>
@@ -238,7 +384,9 @@ const Dashboard = () => {
 									<Input type='text' placeholder='Town / City *' required='required' />
 									<Input type='number' placeholder='Phone *' required='required' />
 									<Input type='email' placeholder='Email *' required='required' />
-									<ButtonForm width='40%' title='SAVE ADDRESS' />
+									<div style={{ display: 'flex', justifyContent: 'center' }}>
+										<ButtonForm width='80%' title='SAVE ADDRESS' />
+									</div>
 								</div>
 							) : (
 								<div className={styles.addressesBlock}>
@@ -279,7 +427,9 @@ const Dashboard = () => {
 									<Input type='text' placeholder='Town / City *' required='required' />
 									<Input type='number' placeholder='Phone *' required='required' />
 									<Input type='email' placeholder='Email *' required='required' />
-									<ButtonForm width='40%' title='SAVE ADDRESS' />
+									<div style={{ display: 'flex', justifyContent: 'center' }}>
+										<ButtonForm width='80%' title='SAVE ADDRESS' />
+									</div>
 								</div>
 							) : (
 								<div className={styles.addressesBlock}>

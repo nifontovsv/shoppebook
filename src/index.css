@@ -1,5 +1,6 @@
-*,
+html,
 body {
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -8,4 +9,10 @@ body {
 	font-family: 'DM Sans', sans-serif;
 	/* font-family: 'Allerta Stencil', sans-serif; */
 	-webkit-user-select: text;
+}
+
+#root {
+	display: grid;
+	grid-template-rows: auto 1fr auto; /* Шапка, контент, футер */
+	min-height: 100vh;
 }

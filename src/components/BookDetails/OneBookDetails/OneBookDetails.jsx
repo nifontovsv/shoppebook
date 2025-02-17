@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { clearBookDetails, fetchDetailsBooks } from '../../../store/reducers/booksListReducer';
 
-const OneBookDetails = () => {
+const OneBookDetails = ({ reviewsCount }) => {
 	const dispatch = useDispatch();
 	const { id } = useParams();
 	const { bookDetails, error, loading } = useSelector((state) => state.booksList); // books?
@@ -138,7 +138,7 @@ const OneBookDetails = () => {
 						</defs>
 					</svg>
 				</div>
-				<span className={s.bookRaitingDescription}>1 customer review</span>
+				<span className={s.bookRaitingDescription}>{reviewsCount} customer review</span>
 			</div>
 			<p className={s.bookDescription}>
 				{shortenTitle(

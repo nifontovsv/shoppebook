@@ -13,4 +13,7 @@
 	&:hover {
 		transform: scale(1.01);
 	}
+	@media (320px <= width <= 768px) {
+		font-size: 12px;
+	}
 }
