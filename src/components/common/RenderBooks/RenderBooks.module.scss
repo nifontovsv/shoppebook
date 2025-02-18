@@ -1,40 +1,51 @@
 @import '../../../styles/variables.scss';
 
 .listPopularBooks {
+	display: flex;
+	flex-wrap: wrap;
 	// display: grid;
-	justify-items: center;
+	// grid-template-columns: repeat(6, 1fr);
 	padding: 0;
-	gap: 15px;
-
+	justify-content: center;
+	gap: 25px;
+	// @media (1000px <= width < 1300px) {
+	// 	grid-template-columns: repeat(4, 1fr);
+	// 	// gap: 35px;
+	// }
+	// @media (700px <= width < 1000px) {
+	// 	grid-template-columns: repeat(3, 1fr);
+	// }
+	// @media (320px <= width < 700px) {
+	// 	grid-template-columns: repeat(2, 1fr);
+	// }
 	.popularBook {
-		height: auto;
+		width: 200px;
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-		width: 180px;
 
 		.backgroundImageBook {
 			position: relative;
 			background: #efeee8;
 			width: 100%;
-			height: auto;
+			height: 260px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			border-radius: 8px;
-			padding: 50px 0;
+
 			&:hover {
-				.addBookToCart {
+				.sold {
 					opacity: 1;
 				}
 			}
 			.imageBook {
 				transition: all 0.3s ease-in-out;
-				box-shadow: 0 0 10px 2px rgba(34, 60, 80, 0.5);
 				width: 120px;
 				height: 180px;
+				box-shadow: 0 0 10px 2px rgba(34, 60, 80, 0.5);
 			}
-			.addBookToCart,
+			.sold,
 			.seeDetails {
 				position: absolute;
 				transition: opacity 0.3s ease;
@@ -45,37 +56,49 @@
 				color: $dark-colors-light-gray-dark;
 				text-transform: uppercase;
 			}
-			.addBookToCart {
+			.sold {
 				background: rgba(255, 255, 255, 0.9);
 				width: 96%;
-				bottom: 42%;
+				bottom: 36%;
 				opacity: 0;
 				border-radius: 8px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				@media (320px <= width <= 991px) {
+					opacity: 1;
+				}
 			}
+
 			.seeDetails {
 				width: 100%;
 				bottom: 0;
 				background: transparent;
 				border-top: 2px solid #fff;
 				border-radius: 0 0 8px 8px;
-
-				&:hover {
-					background: rgba(228, 228, 228, 0.9);
-				}
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-decoration: none;
 			}
 		}
-
+		.titleBook,
+		.authorBook {
+			cursor: pointer;
+		}
 		.titleBook {
 			font-weight: 400;
-			font-size: 18px;
+			font-size: 17px;
 			line-height: 130%;
 			text-align: center;
 			color: $light-colors-black-light;
-			height: 43px;
-			margin: 20px 0 15px;
+			height: 60px;
+			margin: 20px 0 10px;
 		}
 		.authorBook {
 			font-weight: 400;
+			// height: 43px;
 			font-size: 13px;
 			letter-spacing: 0.02em;
 			text-transform: capitalize;

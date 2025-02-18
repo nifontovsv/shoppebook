@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './CartItem.module.scss';
 import { decrementCount, incrementCount, removeItem } from '../../../store/reducers/cartReducer';
 import { useDispatch } from 'react-redux';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const CartItem = ({ item, id }) => {
 	const dispatch = useDispatch();
@@ -43,9 +44,7 @@ const CartItem = ({ item, id }) => {
 				</div>
 			</div>
 			<button className={styles.cartItemBtn} onClick={handleRemove}>
-				<svg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'>
-					<path d='M1 1.09172L6.90828 7M1 6.90828L6.90828 1' stroke='black' stroke-width='1.5' />
-				</svg>
+				<ClearIcon />
 			</button>
 		</div>
 	);

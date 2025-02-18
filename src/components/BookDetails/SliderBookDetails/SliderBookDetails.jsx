@@ -26,50 +26,55 @@ const SliderBookDetails = () => {
 	// Получаем изображения из bookDetails, если они есть
 	const images = bookDetails?.volumeInfo?.imageLinks?.thumbnail
 		? [bookDetails.volumeInfo.imageLinks.thumbnail]
-		: [imageBook, imageBook]; // Запасное изображение, если данных нет // Если bookDetails или bookDetails.volumeInfo не существует, выражение bookDetails?.volumeInfo вернет undefined и не вызовет ошибку. Это важно, чтобы избежать ошибок при обращении к свойствам, которых может не быть в объекте.
+		: [imageBook]; // Запасное изображение, если данных нет // Если bookDetails или bookDetails.volumeInfo не существует, выражение bookDetails?.volumeInfo вернет undefined и не вызовет ошибку. Это важно, чтобы избежать ошибок при обращении к свойствам, которых может не быть в объекте.
 
 	return (
-		<div className={s.sliderContainer}>
-			{/* Слайдер миниатюр (слева) */}
-			<div className={s.smallImages}>
-				<Swiper
-					direction='vertical'
-					slidesPerView={4}
-					spaceBetween={10}
-					watchSlidesProgress
-					onSwiper={setThumbsSwiper}
-					modules={[FreeMode, Thumbs]}
-					speed={300}
-					className={s.swiperSmallImages}>
-					{images.map((src, index) => (
-						<SwiperSlide key={index}>
-							<img src={src} alt={`Thumbnail ${index}`} className={s.smallImage} loading='lazy' />
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</div>
+		// <div className={s.sliderContainer}>
+		// 	{/* Слайдер миниатюр (слева) */}
+		// 	<div className={s.smallImages}>
+		// 		<Swiper
+		// 			direction='vertical'
+		// 			slidesPerView={4}
+		// 			spaceBetween={10}
+		// 			watchSlidesProgress
+		// 			onSwiper={setThumbsSwiper}
+		// 			modules={[FreeMode, Thumbs]}
+		// 			speed={300}
+		// 			className={s.swiperSmallImages}>
+		// 			{images.map((src, index) => (
+		// 				<SwiperSlide key={index}>
+		// 					<img src={src} alt={`Thumbnail ${index}`} className={s.smallImage} loading='lazy' />
+		// 				</SwiperSlide>
+		// 			))}
+		// 		</Swiper>
+		// 	</div>
 
-			{/* Основной слайдер (справа) */}
-			<div className={s.largeImageContainer}>
-				<Swiper
-					style={{ width: '100%' }}
-					speed={300}
-					spaceBetween={10}
-					thumbs={{ swiper: thumbsSwiper || undefined }}
-					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-					modules={[FreeMode, Thumbs]}>
-					{images.map((src, index) => (
-						<SwiperSlide key={index}>
-							<img
-								src={src}
-								alt={`Main ${index}`}
-								className={`${s.largeImage} ${activeIndex === index ? s.fadeIn : ''}`}
-								loading='lazy'
-							/>
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</div>
+		// 	{/* Основной слайдер (справа) */}
+		// 	<div className={s.largeImageContainer}>
+		// 		<Swiper
+		// 			style={{ width: '100%' }}
+		// 			speed={300}
+		// 			spaceBetween={10}
+		// 			thumbs={{ swiper: thumbsSwiper || undefined }}
+		// 			onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+		// 			modules={[FreeMode, Thumbs]}>
+		// 			{images.map((src, index) => (
+		// 				<SwiperSlide key={index}>
+		// 					<img
+		// 						src={src}
+		// 						alt={`Main ${index}`}
+		// 						className={`${s.largeImage} ${activeIndex === index ? s.fadeIn : ''}`}
+		// 						loading='lazy'
+		// 					/>
+		// 				</SwiperSlide>
+		// 			))}
+		// 		</Swiper>
+		// 	</div>
+		// </div>
+		<div className={s.imageContainer}>
+			{images.map((src, index) => (
+				<img src={src} alt={`Main ${index}`} className={s.image} loading='lazy' />
+			))}
 		</div>
 	);
 };

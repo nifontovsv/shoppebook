@@ -3,9 +3,12 @@ import styles from './Burger.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { openMenuBurger, openSidebar } from '../../../store/reducers/cartReducer';
 import CartIcon from '../../Cart/CartIcon/CartIcon';
-import clsx from 'clsx';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Link } from 'react-router-dom';
 
 const Burger = () => {
+	const { totalQuantity } = useSelector((state) => state.cart);
+	const { favorites } = useSelector((state) => state.booksList);
 	const { isOpenMenuBurger } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const handleOpenMenuBurger = () => {
@@ -37,8 +40,12 @@ const Burger = () => {
 							fill='black'
 						/>
 					</svg>
-					<CartIcon />
+					<CartIcon quantity={totalQuantity} />
 				</div>
+				<Link to='/wishlist' style={{ position: 'relative' }}>
+					<FavoriteBorderIcon sx={{ color: '#000' }} />
+					<CartIcon quantity={favorites.length} />
+				</Link>
 				<div>
 					<svg
 						onClick={handleOpenMenuBurger}

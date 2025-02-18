@@ -5,14 +5,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../../store/reducers/cartReducer';
 import Grid from '@mui/material/Grid2';
+import MyFavorites from '../MyFavorites/MyFavorites';
+import AddInCart from '../../common/AddInCart/AddInCart';
 
 const RenderBooks = ({ books }) => {
 	const { loading, error } = useSelector((state) => state.booksList);
-	const dispatch = useDispatch();
-
-	const addBookToCart = (book) => {
-		dispatch(addItem(book));
-	};
 
 	// Если идет загрузка
 	if (loading) {
@@ -45,12 +42,15 @@ const RenderBooks = ({ books }) => {
 								) : (
 									<img className={styles.imageBook} src={photo} alt='Изображение книги' />
 								)}
-								<button onClick={() => addBookToCart(book)} className={styles.addBookToCart}>
-									Add cart
-								</button>
+								{book.saleInfo.listPrice ? (
+									<AddInCart book={book} addInCartShop />
+								) : (
+									<p className={styles.sold}>Sold out</p>
+								)}
 								<Link to={`/book/${book.id}`} className={styles.seeDetails}>
 									See details
 								</Link>
+								<MyFavorites book={book} styleFavorite />
 							</div>
 
 							<h2 className={styles.titleBook} title={book.volumeInfo.title}>

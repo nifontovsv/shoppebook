@@ -1,12 +1,14 @@
 import React from 'react';
 import s from './HeaderIcon.module.scss';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openSidebar } from '../../../store/reducers/cartReducer';
 import CartIcon from '../../Cart/CartIcon/CartIcon';
 import clsx from 'clsx';
 
 export default function HeaderIcon({ burgerMenu }) {
+	const { totalQuantity } = useSelector((state) => state.cart);
+	const { favorites } = useSelector((state) => state.booksList);
 	const dispatch = useDispatch();
 	const handleOpenSidebar = () => {
 		dispatch(openSidebar());
@@ -40,7 +42,7 @@ export default function HeaderIcon({ burgerMenu }) {
 						fill='black'
 					/>
 				</svg>
-				<CartIcon />
+				<CartIcon quantity={totalQuantity} />
 			</div>
 
 			<Link to='/wishlist' className={s.headerIcon}>
@@ -64,6 +66,7 @@ export default function HeaderIcon({ burgerMenu }) {
 						</clipPath>
 					</defs>
 				</svg>
+				<CartIcon quantity={favorites.length} />
 			</Link>
 			<Link to='/account' className={s.headerIcon}>
 				<svg

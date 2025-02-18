@@ -12,6 +12,7 @@ const initialState = {
 	minPrice: 0,
 	maxPrice: 100000,
 	isSearching: false,
+	favorites: [],
 	page: 0,
 	sortOrder: 'asc', // Добавляем сортировку (asc - по возрастанию, desc - по убыванию)
 	category: '',
@@ -158,6 +159,16 @@ const booksListReducer = createSlice({
 				state.categories = action.payload;
 			}
 		},
+		addToFavorites(state, action) {
+			const book = action.payload;
+
+			if (!state.favorites.find((fav) => fav.id === book.id)) {
+				state.favorites.push(book);
+			}
+		},
+		removeFromFavorites(state, action) {
+			state.favorites = state.favorites.filter((fav) => fav.id !== action.payload);
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -227,5 +238,7 @@ export const {
 	setSortOrder,
 	setCategory,
 	setMainCategories,
+	addToFavorites,
+	removeFromFavorites,
 } = booksListReducer.actions;
 export default booksListReducer.reducer;

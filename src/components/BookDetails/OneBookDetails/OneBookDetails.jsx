@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Counter from '../../common/Counter/Counter';
+import AddInCart from '../../common/AddInCart/AddInCart';
+import MyFavorites from '../../common/MyFavorites/MyFavorites';
 import s from './OneBookDetails.module.scss';
 import BlockMedia from '../../common/BlockMedia/BlockMedia';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +11,8 @@ import { clearBookDetails, fetchDetailsBooks } from '../../../store/reducers/boo
 const OneBookDetails = ({ reviewsCount }) => {
 	const dispatch = useDispatch();
 	const { id } = useParams();
-	const { bookDetails, error, loading } = useSelector((state) => state.booksList); // books?
+	const { bookDetails, error, loading } = useSelector((state) => state.booksList);
+	const { items } = useSelector((state) => state.cart);
 
 	useEffect(() => {
 		dispatch(clearBookDetails());
@@ -26,6 +29,12 @@ const OneBookDetails = ({ reviewsCount }) => {
 	const { volumeInfo, saleInfo } = bookDetails;
 	const { title, description, authors, categories, publishedDate } = volumeInfo || {};
 	const { listPrice } = saleInfo || {};
+
+	const book = {
+		id,
+		volumeInfo,
+		saleInfo,
+	};
 
 	function shortenTitle(title, maxLength) {
 		if (title.length > maxLength) {
@@ -144,56 +153,37 @@ const OneBookDetails = ({ reviewsCount }) => {
 				{shortenTitle(
 					description?.replace(/<\/?[a-zA-Z]+>/gi, '') ||
 						'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestiae perferendis sapiente molestias dolores quae? Nostrum voluptates illum harum beatae voluptatum saepe explicabo rem, facilis ab, id culpa aspernatur ex.',
-					300
+					200
 				)}
-			</p>
-
-			{listPrice ? (
-				<div className={s.blockAddBookToCart}>
-					{/* <div className={s.counterAddBookToCart}>
-						<button className={s.counterMinus} onClick={handleDecrement}>
-							-
-						</button>
-						<span className={s.count}>{count}</span>
-						<button className={s.counterPlus} onClick={handleIncrement}>
-							+
-						</button>
-					</div> */}
-					<Counter />
-					<button className={s.btnAddBookToCart}>Add to Cart</button>
-				</div>
-			) : (
-				''
-			)}
-			<div className={s.blockWishlistAndMedia}>
-				<a className={s.headerIconWishlist}>
-					<svg
-						width='20'
-						height='20'
-						viewBox='0 0 20 20'
-						fill='none'
-						xmlns='http://www.w3.org/2000/svg'>
-						<g clipPath='url(#clip0_2046_6520)'>
-							<path
-								d='M9.07423 18.5033C9.323 18.7521 9.65742 18.8908 10.0082 18.8908C10.3548 18.8908 10.6974 18.748 10.9421 18.5033L18.2708 11.1746C19.3842 10.0613 19.9959 8.58083 20 7.01068C20 5.43645 19.3883 3.95603 18.2749 2.84265C17.1615 1.72928 15.6852 1.11753 14.1109 1.11753C12.5653 1.11753 11.1093 1.70889 10.0041 2.78556C8.89478 1.70481 7.43475 1.10938 5.88499 1.10938C4.31485 1.10938 2.8385 1.72112 1.72512 2.83042C0.611746 3.9438 0 5.42422 0 6.99845C0 8.56859 0.615824 10.049 1.7292 11.1624L9.07423 18.5033ZM2.43475 3.54004C3.35644 2.61835 4.58401 2.10856 5.88907 2.10856C7.19413 2.10856 8.42578 2.61835 9.35155 3.54412L9.65334 3.84592C9.74715 3.93972 9.87357 3.99274 10.0082 3.99274C10.1387 3.99274 10.2692 3.93972 10.363 3.84592L10.6566 3.55228C11.5824 2.6265 12.81 2.11672 14.1191 2.11672C15.4241 2.11672 16.6517 2.6265 17.5734 3.5482C18.4992 4.47398 19.0049 5.70154 19.0049 7.0066C19.0049 8.31166 18.4951 9.53923 17.5693 10.465L10.2365 17.7978C10.1183 17.9161 9.90212 17.9161 9.77977 17.7978L2.43883 10.4568C1.51305 9.53107 1.00326 8.3035 1.00326 6.99845C1.00326 5.69339 1.51305 4.46582 2.43475 3.54004Z'
-								fill='black'
-								stroke='black'
-								strokeWidth='0.3'
-							/>
-						</g>
-						<defs>
-							<clipPath id='clip0_2046_6520'>
-								<rect width='20' height='20' fill='white' />
-							</clipPath>
-						</defs>
-					</svg>
+				<a className={s.bookDescriptionLink} href='#readmore'>
+					&nbsp;read more
 				</a>
-				<BlockMedia />
+			</p>
+			<div
+				style={{
+					display: 'flex',
+					gap: '80px',
+					alignItems: 'center',
+					marginBottom: '20px',
+				}}>
+				{' '}
+				{listPrice ? (
+					<div className={s.blockAddBookToCart}>
+						{items[book.id]?.quantity > 0 ? (
+							<Counter id={id} />
+						) : (
+							<AddInCart book={book} addInCartBookDet />
+						)}
+					</div>
+				) : (
+					''
+				)}
+				<div className={s.blockWishlistAndMedia}>
+					<MyFavorites book={items} />
+					<BlockMedia />
+				</div>
 			</div>
-			<div className={s.blockSku}>
-				<p className={s.sku}>SKU:</p>
-				<span className={s.blockSkuValue}>12</span>
-			</div>
+
 			<div className={s.blockSku}>
 				<p className={s.sku}>Categories:</p>
 				<span className={s.blockSkuValue}>{categories ? categories : 'no category'}</span>
@@ -203,10 +193,3 @@ const OneBookDetails = ({ reviewsCount }) => {
 };
 
 export default OneBookDetails;
-// <div>
-// 	<h1>{volumeInfo.title}</h1>
-// 	<img src={volumeInfo.imageLinks?.thumbnail} alt={volumeInfo.title} />
-// 	<p>{volumeInfo.description}</p>
-// 	<p>Автор(ы): {volumeInfo.authors?.join(', ')}</p>
-// 	<p>Дата публикации: {volumeInfo.publishedDate}</p>
-// </div>

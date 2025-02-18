@@ -13,7 +13,7 @@ const Password = () => {
 					If you've forgotten your password, enter your e-mail address and we'll send you an e-mail
 				</h3>
 				<Input type='email' placeholder='Email' />
-				<ButtonForm title='RESET PASSWORD' />
+				<ButtonForm width='80%' title='RESET PASSWORD' />
 			</div>
 		</div>
 	);
