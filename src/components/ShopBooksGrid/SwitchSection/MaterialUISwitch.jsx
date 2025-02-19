@@ -3,8 +3,12 @@ import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useDispatch, useSelector } from 'react-redux';
+import { setInStock } from '../../../store/reducers/booksListReducer';
 
-const IOSSwitch = styled(props => <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />)(({ theme }) => ({
+const IOSSwitch = styled((props) => (
+	<Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
+))(({ theme }) => ({
 	width: 42,
 	height: 26,
 	padding: 0,
@@ -64,9 +68,19 @@ const IOSSwitch = styled(props => <Switch focusVisibleClassName='.Mui-focusVisib
 }));
 
 export default function CustomizedSwitches() {
+	const dispatch = useDispatch();
+	const { inStock } = useSelector((state) => state.booksList); // false
+	const handleInStock = () => {
+		dispatch(setInStock(!inStock)); // Переключаем значение
+	};
 	return (
 		<FormGroup>
-			<FormControlLabel control={<IOSSwitch sx={{ m: 0 }} />} sx={{ marginRight: 0 }} />
+			<FormControlLabel
+				control={<IOSSwitch sx={{ m: 0 }} />}
+				sx={{ marginRight: 0 }}
+				onClick={handleInStock}
+				checked={inStock}
+			/>
 		</FormGroup>
 	);
 }

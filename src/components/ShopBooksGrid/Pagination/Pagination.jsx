@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import styles from './Pagination.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks, setPage } from '../../../store/reducers/booksListReducer';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const Pagination = () => {
 	const dispatch = useDispatch();
@@ -19,12 +22,18 @@ const Pagination = () => {
 	};
 
 	return (
-		<div>
-			<button onClick={handlePrev} disabled={loading || page === 0}>
-				Предыдущая
+		<div className={styles.paginationWrapper}>
+			<button
+				className={styles.paginationBtn}
+				onClick={handlePrev}
+				disabled={loading || page === 0}>
+				<ArrowBackIosIcon />
 			</button>
-			<button onClick={handleNext} disabled={loading || books.length < 20}>
-				Следующая
+			<button
+				className={styles.paginationBtn}
+				onClick={handleNext}
+				disabled={loading || books.length < 20}>
+				<ArrowForwardIosIcon />
 			</button>
 		</div>
 	);

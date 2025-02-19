@@ -24,7 +24,7 @@ const Checkout = () => {
 				</p>
 				<form className={classes.checkoutCouponForm}>
 					<Input placeholder='Coupon Code' />
-					<ButtonForm width='40%' title='APPLY COUPON' />
+					<ButtonForm width='80%' title='APPLY COUPON' />
 				</form>
 			</div>
 			<div className={classes.checkoutOrderDetails}>

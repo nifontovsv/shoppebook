@@ -16,6 +16,7 @@ const initialState = {
 	page: 0,
 	sortOrder: 'asc', // Добавляем сортировку (asc - по возрастанию, desc - по убыванию)
 	category: '',
+	inStock: false,
 	categories: [
 		'Art',
 		'Biography & Autobiography',
@@ -92,6 +93,9 @@ const booksListReducer = createSlice({
 	name: 'books',
 	initialState,
 	reducers: {
+		setInStock(state, action) {
+			state.inStock = action.payload;
+		},
 		setQuery(state, action) {
 			state.query = action.payload;
 			state.page = 0;
@@ -143,14 +147,20 @@ const booksListReducer = createSlice({
 			state.category = action.payload;
 			state.page = 0;
 
-			// Если выбрана "Все категории" — показываем все книги
-			if (state.category === '') {
-				state.filteredProducts = state.books;
+			state.filteredProducts = state.books.filter((book) => {
+				const mainCategory = book.volumeInfo.categories?.[0] || 'Other';
+				return state.category === '' || mainCategory === state.category;
+			});
+		},
+		setInStock(state, action) {
+			state.inStock = action.payload;
+
+			if (state.inStock) {
+				state.filteredProducts = state.filteredProducts.filter(
+					(book) => book.saleInfo?.listPrice?.amount !== undefined
+				);
 			} else {
-				state.filteredProducts = state.books.filter((book) => {
-					const mainCategory = book.volumeInfo.categories?.[0] || 'Other'; // Берем только первую категорию
-					return mainCategory === state.category;
-				});
+				state.filteredProducts = [...state.books];
 			}
 		},
 		setMainCategories(state, action) {
@@ -240,5 +250,6 @@ export const {
 	setMainCategories,
 	addToFavorites,
 	removeFromFavorites,
+	setInStock,
 } = booksListReducer.actions;
 export default booksListReducer.reducer;

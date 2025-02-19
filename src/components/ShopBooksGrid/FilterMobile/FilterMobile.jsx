@@ -6,7 +6,7 @@ import SearchBar from '../SearchBar/SearchBar';
 
 const FilterMobile = () => {
 	return (
-		<div>
+		<div style={{ padding: '0 10px' }}>
 			<SearchBar />
 			<DropdownFilter />
 			<RangeSlider />

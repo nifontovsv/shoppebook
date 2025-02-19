@@ -1,11 +1,15 @@
 @import '../../../../../styles/variables.scss';
 .orderTrack {
-	margin-top: 150px;
-	height: 70vh;
+	margin: 100px 0 50px;
 	display: flex;
 	justify-content: center;
+
 	.orderTrackWrapper {
-		width: 40%;
+		width: 60%;
+
+		@media (max-width: 768px) {
+			width: 90%;
+		}
 
 		.orderTrackDescription {
 			margin-top: 39px;
@@ -14,6 +18,10 @@
 			line-height: 130%;
 			text-align: center;
 			color: $light-colors-black-light;
+
+			@media (max-width: 768px) {
+				font-size: 16px;
+			}
 		}
 
 		.orderTrackForm {

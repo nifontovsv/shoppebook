@@ -42,7 +42,7 @@ const Burger = () => {
 					</svg>
 					<CartIcon quantity={totalQuantity} />
 				</div>
-				<Link to='/wishlist' style={{ position: 'relative' }}>
+				<Link to='/wishlist' style={{ position: 'relative', marginLeft: '10px' }}>
 					<FavoriteBorderIcon sx={{ color: '#000' }} />
 					<CartIcon quantity={favorites.length} />
 				</Link>

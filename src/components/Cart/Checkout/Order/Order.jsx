@@ -136,9 +136,9 @@ const Order = () => {
 					</div>
 				</div>
 			</div>
-			<div style={{ marginBottom: '40px' }}>
+			<div style={{ margin: '0 40px 40px 40px' }}>
 				<Link to='/ordertrack'>
-					<ButtonForm width='20%' title='Order Track' />
+					<ButtonForm width='40%' title='Order Track' />
 				</Link>
 			</div>
 		</div>

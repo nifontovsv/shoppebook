@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPriceRange } from '../../../store/reducers/booksListReducer';
+import { setInStock, setPriceRange } from '../../../store/reducers/booksListReducer';
 
 function valuetext(value) {
 	return `${value}`;
@@ -13,6 +13,7 @@ export default function RangeSlider() {
 	const { minPrice, maxPrice } = useSelector((state) => state.booksList);
 
 	const handleChange = (event, newValue) => {
+		dispatch(setInStock(false));
 		dispatch(setPriceRange({ min: newValue[0], max: newValue[1] }));
 	};
 
