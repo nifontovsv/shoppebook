@@ -5,5 +5,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(8888, () => {
-	console.log('server has started...');
+	// console.log('server has started...');
 });

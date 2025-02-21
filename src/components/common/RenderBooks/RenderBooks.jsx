@@ -2,8 +2,7 @@ import React from 'react';
 import styles from './RenderBooks.module.scss';
 import photo from '../../../img/book1.png';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../../store/reducers/cartReducer';
+import { useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid2';
 import MyFavorites from '../MyFavorites/MyFavorites';
 import AddInCart from '../../common/AddInCart/AddInCart';
@@ -30,7 +29,7 @@ const RenderBooks = ({ books }) => {
 		<Grid container spacing={3} justifyContent='center' className={styles.listPopularBooks}>
 			{books.length > 0 ? (
 				books.map((book) => (
-					<Grid item xs={12} sm={6} md={4} lg={3} key={book.id}>
+					<Grid xs={12} sm={6} md={4} lg={3} key={book.id}>
 						<div className={styles.popularBook}>
 							<div className={styles.backgroundImageBook}>
 								{book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail ? (
@@ -68,7 +67,7 @@ const RenderBooks = ({ books }) => {
 					</Grid>
 				))
 			) : (
-				<Grid item xs={12}>
+				<Grid xs={12}>
 					<p>Нет доступных книг.</p>
 				</Grid>
 			)}

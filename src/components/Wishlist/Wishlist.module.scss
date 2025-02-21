@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 .wishlist {
-	padding-top: 150px;
+	padding-top: 100px;
 	min-height: 70vh;
 	display: flex;
 	flex-direction: column;
@@ -68,13 +68,14 @@
 		grid-template-columns: repeat(2, 1fr);
 		margin-top: 34px;
 		margin-bottom: 30px;
+		justify-content: center;
+		gap: 20px;
+		padding-left: 0;
 
 		@media (320px <= width <= 500px) {
 			grid-template-columns: 1fr;
 		}
-		justify-content: center;
-		gap: 20px;
-		padding-left: 0;
+
 		.card {
 			position: relative;
 			display: flex;
@@ -82,6 +83,7 @@
 			flex-direction: column;
 			border: 1px solid #9a9a9a;
 			padding: 10px;
+
 			.imgBlockMobile {
 				display: flex;
 				gap: 10px;

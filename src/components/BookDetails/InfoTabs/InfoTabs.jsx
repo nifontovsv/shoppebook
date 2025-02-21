@@ -1,73 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import clsx from 'clsx';
 import s from './InfoTabs.module.scss';
 import ContentTabs from './ContentTabs/ContentTabs';
-import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
+
+const TABS = [
+	{ key: 'tab1', label: 'Description' },
+	{ key: 'tab2', label: 'Additional information' },
+	{ key: 'tab3', label: 'Reviews' },
+];
 
 const InfoTabs = ({ updateTwoReviewsCount }) => {
-	const { id } = useParams(); // получаем id книги из URL
 	const [activeTab, setActiveTab] = useState('tab1');
-	const handleClickTab1 = (e) => {
-		e.preventDefault();
-		setActiveTab('tab1');
-	};
-	const handleClickTab2 = (e) => {
-		e.preventDefault();
-		setActiveTab('tab2');
-	};
-	const handleClickTab3 = (e) => {
-		e.preventDefault();
-		setActiveTab('tab3');
-	};
-	const [reviewsCount, setReviewsCount] = useState(0); // Состояние для хранения количества отзывов
+	const [reviewsCount, setReviewsCount] = useState(0);
+
+	// Передаем обновленное количество отзывов родительскому компоненту
 	updateTwoReviewsCount(reviewsCount);
-	// Функция, которую будем передавать в дочерний компонент для обновления состояния
+
+	// Универсальный обработчик клика по вкладке
+	const handleTabClick = (tabKey) => (e) => {
+		e.preventDefault();
+		setActiveTab(tabKey);
+	};
+
+	// Функция обновления количества отзывов, передаваемая в дочерний компонент
 	const updateReviewsCount = (count) => {
-		setReviewsCount(count); // Обновляем количество отзывов
+		setReviewsCount(count);
 	};
 
 	return (
 		<div className={s.infoTabs}>
 			<ul className={s.infoList}>
-				<li
-					className={clsx(s.infoListItem, {
-						[s.infoListItemActive]: activeTab === 'tab1',
-					})}>
-					<a
-						onClick={handleClickTab1}
-						className={clsx(s.infoListItemLink, {
-							[s.infoListItemLinkActive]: activeTab === 'tab1',
-						})}
-						href='#'>
-						Description
-					</a>
-				</li>
-				<li
-					className={clsx(s.infoListItem, {
-						[s.infoListItemActive]: activeTab === 'tab2',
-					})}>
-					<a
-						onClick={handleClickTab2}
-						className={clsx(s.infoListItemLink, {
-							[s.infoListItemLinkActive]: activeTab === 'tab2',
-						})}
-						href='#'>
-						Aditional information
-					</a>
-				</li>
-				<li
-					className={clsx(s.infoListItem, {
-						[s.infoListItemActive]: activeTab === 'tab3',
-					})}>
-					<a
-						onClick={handleClickTab3}
-						className={clsx(s.infoListItemLink, {
-							[s.infoListItemLinkActive]: activeTab === 'tab3',
-						})}
-						href='#'>
-						Reviews ({reviewsCount})
-					</a>
-				</li>
+				{TABS.map((tab) => (
+					<li
+						key={tab.key}
+						className={clsx(s.infoListItem, {
+							[s.infoListItemActive]: activeTab === tab.key,
+						})}>
+						<a
+							href='#'
+							onClick={handleTabClick(tab.key)}
+							className={clsx(s.infoListItemLink, {
+								[s.infoListItemLinkActive]: activeTab === tab.key,
+							})}>
+							{tab.key === 'tab3' ? `${tab.label} (${reviewsCount})` : tab.label}
+						</a>
+					</li>
+				))}
 			</ul>
 			<ContentTabs activeTab={activeTab} updateReviewsCount={updateReviewsCount} />
 		</div>

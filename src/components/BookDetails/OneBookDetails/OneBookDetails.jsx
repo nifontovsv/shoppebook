@@ -179,7 +179,7 @@ const OneBookDetails = ({ reviewsCount }) => {
 					''
 				)}
 				<div className={s.blockWishlistAndMedia}>
-					<MyFavorites book={items} />
+					<MyFavorites book={book} />
 					<BlockMedia />
 				</div>
 			</div>

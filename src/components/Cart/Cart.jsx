@@ -11,6 +11,7 @@ import {
 import Title from '../common/Title/Title';
 import ButtonForm from '../common/ButtonForm/ButtonForm';
 import { Link } from 'react-router-dom';
+import EmptyBlock from '../common/EmptyBlock/EmptyBlock';
 
 const Cart = () => {
 	const { items, totalPrice } = useSelector((state) => state.cart);
@@ -37,7 +38,7 @@ const Cart = () => {
 			<Title title='Shopping Cart' />
 			<div className={styles.cartItems}>
 				{Object.keys(items).length === 0 ? (
-					<div className={styles.emptyCart}>Cart is empty...</div>
+					<EmptyBlock title='Cart is empty...' />
 				) : (
 					<div className={styles.cartItemWrapper}>
 						{Object.entries(items).map(([id, item]) => (
@@ -80,7 +81,7 @@ const Cart = () => {
 										<path
 											d='M1 1.09172L6.90828 7M1 6.90828L6.90828 1'
 											stroke='black'
-											stroke-width='1.5'
+											strokeWidth='1.5'
 										/>
 									</svg>
 								</button>

@@ -25,14 +25,10 @@ export default function SelectLabels() {
 				onChange={handleCategoryChange}
 				displayEmpty
 				inputProps={{ 'aria-label': 'Выберите категорию' }}
-				input={
-					<InputBase
-						sx={{
-							'&:focus': { outline: 'none', boxShadow: 'none' },
-							'& .MuiInputBase-input': { padding: '10px' },
-						}}
-					/>
-				}>
+				sx={{
+					'&:focus': { outline: 'none', boxShadow: 'none' },
+					'& .MuiInputBase-input': { padding: '10px' },
+				}}>
 				<MenuItem value=''>Все категории</MenuItem>
 				{categories.length > 0 ? (
 					categories.map((cat) => (

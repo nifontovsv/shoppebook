@@ -38,7 +38,7 @@ function UncontrolledExample() {
 		<Carousel
 			controls={false}
 			indicators={true}
-			interval={null} // Отключаем автоматическую прокрутку
+			interval={3000} // автоматическая прокрутка
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 			pause={paused ? 'hover' : false} // Остановка карусели при наведении

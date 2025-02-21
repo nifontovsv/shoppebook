@@ -1,7 +1,7 @@
 .gridContainer {
 	padding-top: 100px;
 	display: grid;
-	grid-template-columns: 200px auto;
+	grid-template-columns: 300px auto;
 	gap: 30px;
 	@media (max-width: 768px) {
 		grid-template-columns: auto;

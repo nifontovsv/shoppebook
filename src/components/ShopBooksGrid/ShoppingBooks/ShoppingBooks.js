@@ -4,12 +4,13 @@ import RenderBooks from '../../common/RenderBooks/RenderBooks';
 import Pagination from '../Pagination/Pagination';
 
 function ShoppingBooks() {
-	const { filteredProducts } = useSelector((state) => state.booksList);
+	const { filteredProducts, loading } = useSelector((state) => state.booksList);
 
 	return (
-		<div>
+		<div style={{ minHeight: '80vh' }}>
 			<RenderBooks books={filteredProducts} />
-			<Pagination />
+
+			{loading || filteredProducts.length === 0 ? null : <Pagination />}
 		</div>
 	);
 }

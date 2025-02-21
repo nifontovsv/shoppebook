@@ -9,6 +9,7 @@ import AddInCart from '../common/AddInCart/AddInCart';
 import { useMediaQuery } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import EmptyBlock from '../common/EmptyBlock/EmptyBlock';
 
 const Wishlist = () => {
 	const favorites = useSelector((state) => state.booksList.favorites);
@@ -114,7 +115,7 @@ const Wishlist = () => {
 					)}
 				</>
 			) : (
-				<div>Your wishlist is empty</div>
+				<EmptyBlock title='Wishlist is empty...' />
 			)}
 		</div>
 	);

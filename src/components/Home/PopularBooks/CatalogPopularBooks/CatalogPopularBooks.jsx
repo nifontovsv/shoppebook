@@ -9,7 +9,7 @@ function CatalogPopularBooks() {
 
 	useEffect(() => {
 		if (popularBooks.length === 0) {
-			console.log('Fetching books...');
+			// console.log('Fetching books...');
 			dispatch(fetchPopularBooks());
 		}
 	}, [dispatch, popularBooks.length]);

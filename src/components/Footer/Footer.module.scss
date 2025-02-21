@@ -3,6 +3,7 @@
 	margin-top: auto;
 	border-top: 1px solid $light-colors-gray-light;
 	padding: 55px 0;
+	height: 20vh;
 	@media (320px <= width <= 768px) {
 		display: flex;
 		flex-direction: column;

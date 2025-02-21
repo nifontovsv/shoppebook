@@ -4,7 +4,7 @@ const API_KEY = 'AIzaSyBIVxIvSaQTE85dQ5QFppLL8L3AbOroapg';
 const initialState = {
 	popularBooks: [],
 	books: [],
-	bookDetails: null,
+	bookDetails: {},
 	query: '',
 	loading: false,
 	error: null,
