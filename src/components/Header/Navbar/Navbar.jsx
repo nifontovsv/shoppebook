@@ -9,7 +9,7 @@ import Logo from '../Logo/Logo';
 import HeaderIcon from '../HeaderIcon/HeaderIcon';
 
 const NAV_ITEMS = [
-	{ path: '/', label: 'Home' },
+	{ path: '/shoppebook', label: 'Home' },
 	{ path: '/shop', label: 'Shop' },
 	{ path: '/contacts', label: 'Contacts' },
 	{ path: '/account', label: 'Account' },
@@ -23,7 +23,9 @@ export default function Navbar({ burgerMenu }) {
 
 	// Обновляем activeIndex при смене маршрута
 	useEffect(() => {
-		const index = NAV_ITEMS.findIndex((item) => item.path === location.pathname);
+		const index = NAV_ITEMS.findIndex(
+			(item) => item.path === location.pathname
+		);
 		setActiveIndex(index !== -1 ? index : null);
 	}, [location.pathname]);
 
@@ -42,14 +44,16 @@ export default function Navbar({ burgerMenu }) {
 						className={clsx(s.navItem, {
 							[s.navItemActive]: activeIndex === index,
 							[s.navItemBurger]: burgerMenu,
-						})}>
+						})}
+					>
 						<Link
 							onClick={() => handleClick(index)}
 							to={item.path}
 							className={clsx(s.navLink, {
 								[s.navLinkActive]: activeIndex === index,
 								[s.navLinkBurger]: burgerMenu,
-							})}>
+							})}
+						>
 							{item.label}
 						</Link>
 					</li>
