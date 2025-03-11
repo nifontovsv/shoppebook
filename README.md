@@ -67,17 +67,18 @@ export const fetchPopularBooks = createAsyncThunk(
 ## 📂 Установка и запуск
 
 1. Клонируйте репозиторий
-
+```bash
 git clone https://github.com/nifontovsv/shoppebook.git
-
+```
 2. Перейдите в папку с проектом
-
+```bash
 cd shoppebook
-
+```
 3. Подгрузите зависимости
-
+```bash
 npm install
-
+```
 4. Запустите проект
-
+```bash
 npm start
+```
