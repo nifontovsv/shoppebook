@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/shoppebook/static/css/main.65f0fab0.css",
-    "main.js": "/shoppebook/static/js/main.d6d8593f.js",
+    "main.js": "/shoppebook/static/js/main.a45bfddf.js",
     "static/js/453.d620304a.chunk.js": "/shoppebook/static/js/453.d620304a.chunk.js",
     "static/media/book1.png": "/shoppebook/static/media/book1.df6d2055a5162851f539.png",
     "static/media/античность3.jpg": "/shoppebook/static/media/античность3.10bfc7544241c1b38a58.jpg",
@@ -10,11 +10,11 @@
     "static/media/pattern.png": "/shoppebook/static/media/pattern.d1ac2a56c2383db8dd04.png",
     "index.html": "/shoppebook/index.html",
     "main.65f0fab0.css.map": "/shoppebook/static/css/main.65f0fab0.css.map",
-    "main.d6d8593f.js.map": "/shoppebook/static/js/main.d6d8593f.js.map",
+    "main.a45bfddf.js.map": "/shoppebook/static/js/main.a45bfddf.js.map",
     "453.d620304a.chunk.js.map": "/shoppebook/static/js/453.d620304a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.65f0fab0.css",
-    "static/js/main.d6d8593f.js"
+    "static/js/main.a45bfddf.js"
   ]
 }
